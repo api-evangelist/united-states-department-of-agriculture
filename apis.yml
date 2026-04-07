@@ -5,8 +5,7 @@ apis:
   - aid: >-
       united-states-department-of-agriculture:united-states-department-of-agriculture
     name: United States Department of Agriculture
-    tags:
-      - API
+    tags: []
     humanURL: ' https://fdc.nal.usda.gov/api-guide.html'
     properties:
       - url: ' https://fdc.nal.usda.gov/api-guide.html'
