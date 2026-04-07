@@ -12,9 +12,9 @@ apis:
       - url: ' https://fdc.nal.usda.gov/api-guide.html'
         type: Documentation
     description: >-
-      The FoodData Central API provides REST access to FoodData Central (FDC).
-      It is intended primarily to assist application developers wishing to
-      incorporate nutrient data into their applications or websites. 
+      The FoodData Central API provides REST access to FoodData Central (FDC). It
+      is intended primarily to assist application developers wishing to incorporate
+      nutrient data into their applications or websites.
 name: United States Department of Agriculture
 tags:
   - Federal Government
@@ -25,18 +25,11 @@ created: '2024-11-14'
 modified: '2026-03-16'
 position: Consuming
 description: >-
-  The United States Department of Agriculture (USDA) is a federal agency
-  responsible for developing and executing policies related to farming,
-  agriculture, forestry, and food. The USDA works to ensure the sustainability
-  and safety of America's food supply, while also supporting rural development
-  and promoting economic growth in rural communities. The agency provides
-  farmers and ranchers with financial assistance, technical support, and
-  resources to help them improve operations and increase productivity. The USDA
-  also conducts research to address agricultural challenges, such as disease
-  outbreaks, pests, and climate change. Additionally, the USDA oversees federal
-  nutrition programs, including the Supplemental Nutrition Assistance Program
-  (SNAP) and school meal programs, to ensure that all Americans have access to
-  nutritious food.
+  The United States Department of Agriculture (USDA) is a federal agency responsible
+  for developing and executing policies related to farming, agriculture, forestry,
+  and food. The USDA works to ensure the sustainability and safety of America's food
+  supply, while also supporting rural development and promoting economic growth in
+  rural communities.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
