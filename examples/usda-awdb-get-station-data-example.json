@@ -1,0 +1,32 @@
+{
+  "operationId": "getStationData",
+  "request": {
+    "method": "GET",
+    "url": "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1/data",
+    "parameters": {
+      "stationIds": "301:ID:SNTL",
+      "elementCds": "WTEQ,PREC,TOBS",
+      "beginDate": "2024-03-01",
+      "endDate": "2024-03-31",
+      "duration": "DAILY"
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": [
+      {
+        "stationId": "301:ID:SNTL",
+        "elementCode": "WTEQ",
+        "elementName": "Snow Water Equivalent",
+        "storedUnitCode": "in",
+        "duration": "DAILY",
+        "values": [
+          {"date": "2024-03-01", "value": 18.2, "qualityControlCode": "V"},
+          {"date": "2024-03-02", "value": 19.0, "qualityControlCode": "V"},
+          {"date": "2024-03-03", "value": 20.1, "qualityControlCode": "V"}
+        ]
+      }
+    ]
+  }
+}

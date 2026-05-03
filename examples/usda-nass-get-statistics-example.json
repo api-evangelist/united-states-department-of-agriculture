@@ -1,0 +1,44 @@
+{
+  "operationId": "getAgriculturalStatistics",
+  "request": {
+    "method": "GET",
+    "url": "https://quickstats.nass.usda.gov/api/api_GET/",
+    "parameters": {
+      "key": "YOUR_API_KEY",
+      "commodity_desc": "CORN",
+      "statisticcat_desc": "PRODUCTION",
+      "year": "2023",
+      "agg_level_desc": "STATE",
+      "format": "JSON"
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": {
+      "data": [
+        {
+          "source_desc": "SURVEY",
+          "sector_desc": "CROPS",
+          "group_desc": "FIELD CROPS",
+          "commodity_desc": "CORN",
+          "class_desc": "ALL CLASSES",
+          "prodn_practice_desc": "ALL PRODUCTION PRACTICES",
+          "util_practice_desc": "GRAIN",
+          "statisticcat_desc": "PRODUCTION",
+          "unit_desc": "BU",
+          "short_desc": "CORN, GRAIN - PRODUCTION, MEASURED IN BU",
+          "domain_desc": "TOTAL",
+          "agg_level_desc": "STATE",
+          "state_alpha": "IA",
+          "state_name": "IOWA",
+          "year": 2023,
+          "freq_desc": "ANNUAL",
+          "reference_period_desc": "YEAR",
+          "Value": "2,258,000,000",
+          "CV (%)": "1.2"
+        }
+      ]
+    }
+  }
+}

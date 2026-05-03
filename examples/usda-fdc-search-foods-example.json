@@ -1,0 +1,38 @@
+{
+  "operationId": "searchFoods",
+  "request": {
+    "method": "GET",
+    "url": "https://api.nal.usda.gov/fdc/v1/foods/search",
+    "parameters": {
+      "api_key": "DEMO_KEY",
+      "query": "cheddar cheese",
+      "dataType": "Foundation",
+      "pageSize": 5
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": {
+      "totalHits": 42,
+      "currentPage": 1,
+      "totalPages": 9,
+      "foods": [
+        {
+          "fdcId": 328637,
+          "description": "Cheese, cheddar",
+          "dataType": "Foundation",
+          "publishedDate": "2019-04-01",
+          "score": 932.8
+        },
+        {
+          "fdcId": 173414,
+          "description": "Cheese, cheddar, reduced fat",
+          "dataType": "SR Legacy",
+          "publishedDate": "2019-04-01",
+          "score": 908.5
+        }
+      ]
+    }
+  }
+}

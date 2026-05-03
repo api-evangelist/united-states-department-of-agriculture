@@ -1,0 +1,69 @@
+rules:
+  usda-fdc-operation-ids:
+    description: All operations must have operationIds.
+    message: Operation must have an operationId.
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: operationId
+      function: truthy
+    severity: error
+
+  usda-fdc-api-key-param:
+    description: FoodData Central endpoints require api_key parameter.
+    message: FDC operations must include api_key query parameter.
+    given: "$.paths[*][get].parameters[?(@.name == 'api_key')]"
+    then:
+      field: required
+      function: truthy
+    severity: error
+
+  usda-fdc-operations-have-tags:
+    description: All operations must have tags.
+    message: Operation must include at least one tag.
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: tags
+      function: truthy
+    severity: warn
+
+  usda-fdc-parameters-have-descriptions:
+    description: All parameters should have descriptions.
+    message: Parameter must have a description.
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      field: description
+      function: truthy
+    severity: warn
+
+  usda-fdc-success-responses:
+    description: Operations must document 200 responses.
+    message: Operation must document a 200 success response.
+    given: "$.paths[*][get,post].responses"
+    then:
+      field: "200"
+      function: truthy
+    severity: error
+
+  usda-fdc-json-responses:
+    description: FoodData Central operations should return JSON.
+    message: >-
+      FDC API operations should document application/json response content type.
+    given: "$.paths[*][get,post].responses.200.content"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            application/json:
+              type: object
+    severity: warn
+
+  usda-fdc-schemas-have-descriptions:
+    description: All schema components should have descriptions.
+    message: Schema component must have a description.
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+    severity: warn

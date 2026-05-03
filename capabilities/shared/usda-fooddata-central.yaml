@@ -1,0 +1,177 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "USDA FoodData Central API"
+  description: >-
+    REST access to the USDA FoodData Central database providing nutrient
+    profiles and food data across Foundation Foods, SR Legacy, Branded Foods,
+    FNDDS, and Experimental Foods data types.
+  tags:
+    - Food
+    - Nutrition
+    - Agriculture
+    - Federal Government
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      FDC_API_KEY: FDC_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: fdc
+      baseUri: https://api.nal.usda.gov/fdc/v1
+      description: "USDA FoodData Central REST API"
+      authentication:
+        type: apikey
+        key: api_key
+        value: "{{FDC_API_KEY}}"
+        placement: query
+      resources:
+        - name: food-search
+          path: /foods/search
+          description: "Search for foods by keywords and filters"
+          operations:
+            - name: search-foods
+              method: GET
+              description: "Search Foods"
+              inputParameters:
+                - name: query
+                  in: query
+                  type: string
+                  required: true
+                  description: "Search terms"
+                - name: dataType
+                  in: query
+                  type: string
+                  required: false
+                  description: "Food data type filter"
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Results per page"
+                - name: pageNumber
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: food-detail
+          path: /food/{fdcId}
+          description: "Get detailed food item with nutrient data"
+          operations:
+            - name: get-food-by-id
+              method: GET
+              description: "Get Food By FDC ID"
+              inputParameters:
+                - name: fdcId
+                  in: path
+                  type: integer
+                  required: true
+                  description: "FoodData Central food ID"
+                - name: format
+                  in: query
+                  type: string
+                  required: false
+                  description: "abridged or full nutrient format"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: nutrients
+          path: /nutrients
+          description: "List all available nutrients"
+          operations:
+            - name: get-nutrients
+              method: GET
+              description: "Get All Nutrients"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: array
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: fdc-rest
+      resources:
+        - path: /v1/foods/search
+          name: food-search
+          description: "Search FoodData Central for foods"
+          operations:
+            - method: GET
+              name: search-foods
+              description: "Search for foods by keyword"
+              call: "fdc.search-foods"
+              with:
+                query: "rest.query"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/foods/{fdcId}
+          name: food-detail
+          description: "Get detailed food and nutrient data"
+          operations:
+            - method: GET
+              name: get-food
+              description: "Get food item with full nutrient profile"
+              call: "fdc.get-food-by-id"
+              with:
+                fdcId: "rest.fdcId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: fdc-mcp
+      transport: http
+      tools:
+        - name: search-foods
+          description: "Search USDA FoodData Central for food items by keyword"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "fdc.search-foods"
+          with:
+            query: "tools.query"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-food-nutrition
+          description: "Get detailed nutrient data for a specific food by FDC ID"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "fdc.get-food-by-id"
+          with:
+            fdcId: "tools.fdc_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-nutrients
+          description: "List all nutrients tracked in FoodData Central"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "fdc.get-nutrients"
+          with: {}
+          outputParameters:
+            - type: array
+              mapping: "$."

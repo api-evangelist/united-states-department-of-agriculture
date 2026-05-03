@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "usda": "https://fdc.nal.usda.gov/ontology/",
+    "nass": "https://quickstats.nass.usda.gov/ontology/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "agri": "http://purl.org/agri/",
+
+    "FoodItem": "usda:FoodItem",
+    "Nutrient": "usda:Nutrient",
+    "AgriculturalStatistic": "nass:AgriculturalStatistic",
+    "GovernmentOrganization": "GovernmentOrganization",
+
+    "fdcId": {
+      "@id": "usda:fdcId",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "dataType": {
+      "@id": "usda:dataType"
+    },
+    "publicationDate": {
+      "@id": "schema:datePublished",
+      "@type": "schema:Date"
+    },
+    "brandOwner": {
+      "@id": "schema:brand"
+    },
+    "foodCategory": {
+      "@id": "schema:category"
+    },
+    "nutrientName": {
+      "@id": "schema:name"
+    },
+    "nutrientNumber": {
+      "@id": "usda:nutrientNumber"
+    },
+    "unitName": {
+      "@id": "schema:unitCode"
+    },
+    "value": {
+      "@id": "schema:value",
+      "@type": "schema:Number"
+    },
+    "commodity_desc": {
+      "@id": "agri:commodity"
+    },
+    "year": {
+      "@id": "schema:temporalCoverage"
+    },
+    "state_name": {
+      "@id": "schema:addressRegion"
+    },
+    "Value": {
+      "@id": "schema:value"
+    }
+  }
+}

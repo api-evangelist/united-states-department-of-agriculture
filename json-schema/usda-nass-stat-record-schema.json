@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/main/json-schema/usda-nass-stat-record-schema.json",
+  "title": "USDA NASS Agricultural Statistics Record",
+  "description": "Schema for an agricultural statistics record from the USDA NASS Quick Stats API",
+  "type": "object",
+  "properties": {
+    "source_desc": {
+      "type": "string",
+      "description": "Data source (SURVEY or CENSUS)"
+    },
+    "sector_desc": {
+      "type": "string",
+      "description": "Economic sector (CROPS, ANIMALS & PRODUCTS, ECONOMICS, etc.)"
+    },
+    "group_desc": {
+      "type": "string",
+      "description": "Commodity group within sector"
+    },
+    "commodity_desc": {
+      "type": "string",
+      "description": "Commodity name (e.g. CORN, WHEAT, CATTLE)"
+    },
+    "statisticcat_desc": {
+      "type": "string",
+      "description": "Statistics category (e.g. AREA HARVESTED, PRODUCTION, PRICE RECEIVED)"
+    },
+    "unit_desc": {
+      "type": "string",
+      "description": "Unit of measurement (BU, ACRES, HEAD, $, etc.)"
+    },
+    "short_desc": {
+      "type": "string",
+      "description": "Abbreviated item description"
+    },
+    "agg_level_desc": {
+      "type": "string",
+      "description": "Geographic aggregation level"
+    },
+    "state_alpha": {
+      "type": "string",
+      "description": "Two-letter state abbreviation"
+    },
+    "state_name": {
+      "type": "string",
+      "description": "Full state name"
+    },
+    "county_name": {
+      "type": "string",
+      "description": "County name"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Survey or census year"
+    },
+    "freq_desc": {
+      "type": "string",
+      "description": "Data frequency"
+    },
+    "reference_period_desc": {
+      "type": "string",
+      "description": "Reference time period"
+    },
+    "Value": {
+      "type": "string",
+      "description": "Statistical value (may include commas and parentheses for withheld data)"
+    },
+    "CV (%)": {
+      "type": "string",
+      "description": "Coefficient of variation as percentage"
+    }
+  },
+  "required": ["commodity_desc", "statisticcat_desc", "year", "Value"]
+}

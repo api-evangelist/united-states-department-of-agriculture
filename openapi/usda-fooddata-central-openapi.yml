@@ -1,0 +1,389 @@
+openapi: 3.0.3
+info:
+  title: USDA FoodData Central API
+  description: >-
+    The FoodData Central API provides REST access to FoodData Central (FDC),
+    the USDA's integrated data system providing expanded nutrient profile data
+    linked to agricultural and experimental research. Covers Foundation Foods,
+    SR Legacy, FNDDS, Branded Foods, and Experimental Foods. An API key from
+    api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA FoodData Central
+    url: https://fdc.nal.usda.gov/
+    email: FSISWebmaster@usda.gov
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+  - url: https://api.nal.usda.gov/fdc/v1
+    description: USDA FoodData Central API
+tags:
+  - name: Foods
+    description: Food search and retrieval operations
+  - name: Nutrients
+    description: Nutrient data and lists
+paths:
+  /foods/search:
+    get:
+      operationId: searchFoods
+      summary: Search Foods
+      description: >-
+        Search for foods using keywords and filters. Returns paginated food
+        items matching the query across all food data types.
+      tags:
+        - Foods
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+        - name: query
+          in: query
+          description: Search terms to find foods
+          required: true
+          schema:
+            type: string
+          example: cheddar cheese
+        - name: dataType
+          in: query
+          description: Filter by food data type
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Foundation
+                - SR Legacy
+                - Branded
+                - Survey (FNDDS)
+                - Experimental
+          style: form
+          explode: false
+        - name: pageSize
+          in: query
+          description: Number of results per page (max 200)
+          required: false
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: pageNumber
+          in: query
+          description: Page number for paginated results
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: sortBy
+          in: query
+          description: Field to sort results by
+          required: false
+          schema:
+            type: string
+            enum:
+              - dataType.keyword
+              - lowercaseDescription.keyword
+              - fdcId
+              - publishedDate
+        - name: sortOrder
+          in: query
+          description: Sort direction
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Successful food search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResult'
+        '400':
+          description: Invalid parameters
+        '403':
+          description: Invalid or missing API key
+
+  /food/{fdcId}:
+    get:
+      operationId: getFoodById
+      summary: Get Food By FDC ID
+      description: >-
+        Retrieve detailed nutrient data and food information for a specific food
+        item identified by its FDC ID.
+      tags:
+        - Foods
+      parameters:
+        - name: fdcId
+          in: path
+          description: FoodData Central unique food identifier
+          required: true
+          schema:
+            type: integer
+          example: 454004
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+        - name: format
+          in: query
+          description: Nutrient data format to return
+          required: false
+          schema:
+            type: string
+            enum:
+              - abridged
+              - full
+        - name: nutrients
+          in: query
+          description: Filter to specific nutrient IDs (up to 25)
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Food item with nutrient data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodItem'
+        '404':
+          description: Food not found
+
+  /foods:
+    get:
+      operationId: getFoodsByIds
+      summary: Get Multiple Foods By FDC IDs
+      description: >-
+        Retrieve nutrient data for multiple food items by providing a list of
+        FDC IDs.
+      tags:
+        - Foods
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+        - name: fdcIds
+          in: query
+          description: Comma-separated list of FDC IDs (max 20)
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: false
+          example:
+            - 454004
+            - 534358
+        - name: format
+          in: query
+          description: Nutrient data format to return
+          required: false
+          schema:
+            type: string
+            enum:
+              - abridged
+              - full
+        - name: nutrients
+          in: query
+          description: Filter to specific nutrient IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: List of food items with nutrient data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodItem'
+
+  /nutrients:
+    get:
+      operationId: getNutrients
+      summary: Get All Nutrients
+      description: >-
+        Retrieve a list of all nutrients available in FoodData Central with
+        their IDs, names, units, and categories.
+      tags:
+        - Nutrients
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+      responses:
+        '200':
+          description: List of all available nutrients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Nutrient'
+
+components:
+  schemas:
+    SearchResult:
+      type: object
+      description: Paginated food search results
+      properties:
+        totalHits:
+          type: integer
+          description: Total number of matching foods
+        currentPage:
+          type: integer
+          description: Current page number
+        totalPages:
+          type: integer
+          description: Total number of pages
+        pageList:
+          type: array
+          items:
+            type: integer
+          description: List of page numbers
+        foods:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultFood'
+
+    SearchResultFood:
+      type: object
+      description: Food item from search results
+      properties:
+        fdcId:
+          type: integer
+          description: FoodData Central unique identifier
+        description:
+          type: string
+          description: Food item description
+        dataType:
+          type: string
+          description: Type of food data source
+        brandOwner:
+          type: string
+          description: Brand owner (for branded foods)
+        gtinUpc:
+          type: string
+          description: GTIN or UPC barcode
+        publishedDate:
+          type: string
+          format: date
+          description: Date food was published in FDC
+        score:
+          type: number
+          description: Search relevance score
+
+    FoodItem:
+      type: object
+      description: Detailed food item with nutrient data
+      properties:
+        fdcId:
+          type: integer
+          description: FoodData Central unique identifier
+        description:
+          type: string
+          description: Food item description
+        dataType:
+          type: string
+          description: Type of food data source
+        publicationDate:
+          type: string
+          format: date
+          description: Publication date
+        foodClass:
+          type: string
+          description: Food classification
+        foodNutrients:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoodNutrient'
+        foodAttributes:
+          type: array
+          items:
+            type: object
+        inputFoods:
+          type: array
+          items:
+            type: object
+        labelNutrients:
+          type: object
+          description: Nutrition facts label data (branded foods)
+
+    FoodNutrient:
+      type: object
+      description: Nutrient value for a food item
+      properties:
+        nutrientId:
+          type: integer
+          description: Nutrient identifier
+        nutrientName:
+          type: string
+          description: Name of the nutrient
+        nutrientNumber:
+          type: string
+          description: USDA nutrient number
+        unitName:
+          type: string
+          description: Unit of measure (g, mg, kcal, etc.)
+        value:
+          type: number
+          description: Amount of nutrient per 100g of food
+        derivationCode:
+          type: string
+          description: Method used to derive the nutrient value
+
+    Nutrient:
+      type: object
+      description: A nutrient tracked in FoodData Central
+      properties:
+        id:
+          type: integer
+          description: Unique nutrient identifier
+        number:
+          type: string
+          description: USDA nutrient number
+        name:
+          type: string
+          description: Nutrient name
+        rank:
+          type: integer
+          description: Display rank
+        unitName:
+          type: string
+          description: Unit of measure
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key from https://api.data.gov/signup/

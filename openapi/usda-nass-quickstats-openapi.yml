@@ -1,0 +1,379 @@
+openapi: 3.0.3
+info:
+  title: USDA NASS Quick Stats API
+  description: >-
+    The USDA National Agricultural Statistics Service (NASS) Quick Stats API
+    provides direct access to official published aggregate estimates related to
+    U.S. agricultural production. Data covers crops, livestock, economics,
+    demographics, and environmental measurements collected through hundreds of
+    sample surveys each year and the Census of Agriculture every five years.
+    An API key from quickstats.nass.usda.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA NASS
+    url: https://www.nass.usda.gov/developer/
+    email: NASS.Data.Quality@usda.gov
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+  - url: https://quickstats.nass.usda.gov/api
+    description: USDA NASS Quick Stats API
+tags:
+  - name: Statistics
+    description: Agricultural statistics query and retrieval
+  - name: Metadata
+    description: Parameter lookups for building queries
+paths:
+  /api_GET/:
+    get:
+      operationId: getAgriculturalStatistics
+      summary: Get Agricultural Statistics
+      description: >-
+        Query NASS agricultural statistics data using WHAT (commodity, category),
+        WHERE (state, county, watershed), and WHEN (year, period) parameters.
+        Returns a maximum of 50,000 records per request. Supports JSON, CSV,
+        and XML response formats.
+      tags:
+        - Statistics
+      parameters:
+        - name: key
+          in: query
+          description: NASS API key from quickstats.nass.usda.gov
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: Response format
+          required: false
+          schema:
+            type: string
+            enum:
+              - JSON
+              - CSV
+              - XML
+            default: JSON
+        - name: commodity_desc
+          in: query
+          description: Commodity description (e.g. CORN, WHEAT, CATTLE)
+          required: false
+          schema:
+            type: string
+          example: CORN
+        - name: statisticcat_desc
+          in: query
+          description: Statistics category (e.g. AREA HARVESTED, PRODUCTION, PRICE RECEIVED)
+          required: false
+          schema:
+            type: string
+          example: PRODUCTION
+        - name: year
+          in: query
+          description: Four digit year or range using __GE or __LE operators
+          required: false
+          schema:
+            type: string
+          example: '2023'
+        - name: state_name
+          in: query
+          description: Full state name
+          required: false
+          schema:
+            type: string
+          example: IOWA
+        - name: agg_level_desc
+          in: query
+          description: Geographic aggregation level
+          required: false
+          schema:
+            type: string
+            enum:
+              - NATIONAL
+              - STATE
+              - AGRICULTURAL DISTRICT
+              - COUNTY
+              - REGION : MULTI-STATE
+              - REGION : SUB-STATE
+              - WATERSHED
+              - ZIP CODE
+        - name: freq_desc
+          in: query
+          description: Frequency period descriptor
+          required: false
+          schema:
+            type: string
+            enum:
+              - ANNUAL
+              - SEASON
+              - MONTHLY
+              - WEEKLY
+              - POINT IN TIME
+        - name: reference_period_desc
+          in: query
+          description: Reference period (e.g. YEAR, JAN, FEB, MARKETING YEAR)
+          required: false
+          schema:
+            type: string
+        - name: unit_desc
+          in: query
+          description: Unit of measure (e.g. ACRES, BU, HEAD, $)
+          required: false
+          schema:
+            type: string
+        - name: sector_desc
+          in: query
+          description: Economic sector (CROPS, ANIMALS & PRODUCTS, ECONOMICS, etc.)
+          required: false
+          schema:
+            type: string
+        - name: group_desc
+          in: query
+          description: Commodity group within sector
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agricultural statistics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuickStatsResponse'
+        '400':
+          description: Request resulted in more than 50,000 records or invalid parameters
+        '403':
+          description: Invalid or expired API key
+
+  /get_param_values/:
+    get:
+      operationId: getParameterValues
+      summary: Get Valid Parameter Values
+      description: >-
+        Retrieve all valid values for a specified Quick Stats parameter. Useful
+        for building queries and understanding available data dimensions.
+      tags:
+        - Metadata
+      parameters:
+        - name: key
+          in: query
+          description: NASS API key
+          required: true
+          schema:
+            type: string
+        - name: param
+          in: query
+          description: Parameter name to retrieve values for
+          required: true
+          schema:
+            type: string
+            enum:
+              - commodity_desc
+              - statisticcat_desc
+              - unit_desc
+              - state_name
+              - year
+              - agg_level_desc
+              - sector_desc
+              - group_desc
+      responses:
+        '200':
+          description: List of valid values for the specified parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  param:
+                    type: string
+                  values:
+                    type: array
+                    items:
+                      type: string
+
+  /get_counts/:
+    get:
+      operationId: getRecordCount
+      summary: Get Record Count
+      description: >-
+        Get the number of records matching a set of query parameters without
+        retrieving the full dataset. Useful for verifying queries stay under
+        the 50,000 record limit.
+      tags:
+        - Statistics
+      parameters:
+        - name: key
+          in: query
+          description: NASS API key
+          required: true
+          schema:
+            type: string
+        - name: commodity_desc
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: year
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: state_name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: agg_level_desc
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Record count for the query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of matching records
+
+components:
+  schemas:
+    QuickStatsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatRecord'
+
+    StatRecord:
+      type: object
+      description: An individual agricultural statistics record
+      properties:
+        source_desc:
+          type: string
+          description: Data source (SURVEY or CENSUS)
+        sector_desc:
+          type: string
+          description: Economic sector
+        group_desc:
+          type: string
+          description: Commodity group
+        commodity_desc:
+          type: string
+          description: Commodity name
+        class_desc:
+          type: string
+          description: Commodity class or variety
+        prodn_practice_desc:
+          type: string
+          description: Production practice
+        util_practice_desc:
+          type: string
+          description: Utilization practice
+        statisticcat_desc:
+          type: string
+          description: Statistics category
+        unit_desc:
+          type: string
+          description: Unit of measurement
+        short_desc:
+          type: string
+          description: Abbreviated item description
+        domain_desc:
+          type: string
+          description: Domain (TOTAL, AREA OPERATED, etc.)
+        domaincat_desc:
+          type: string
+          description: Domain category
+        agg_level_desc:
+          type: string
+          description: Geographic aggregation level
+        state_ansi:
+          type: string
+          description: ANSI state code
+        state_fips_code:
+          type: string
+          description: FIPS state code
+        state_alpha:
+          type: string
+          description: Two-letter state abbreviation
+        state_name:
+          type: string
+          description: Full state name
+        asd_code:
+          type: string
+          description: Agricultural Statistics District code
+        asd_desc:
+          type: string
+          description: Agricultural Statistics District description
+        county_ansi:
+          type: string
+          description: ANSI county code
+        county_code:
+          type: string
+          description: County FIPS code
+        county_name:
+          type: string
+          description: County name
+        region_desc:
+          type: string
+          description: Multi-state or sub-state region
+        zip_5:
+          type: string
+          description: ZIP code
+        watershed_code:
+          type: string
+          description: Watershed code
+        watershed_desc:
+          type: string
+          description: Watershed description
+        congr_district_code:
+          type: string
+          description: Congressional district code
+        country_code:
+          type: string
+          description: Country code
+        country_name:
+          type: string
+          description: Country name
+        location_desc:
+          type: string
+          description: Location description
+        year:
+          type: integer
+          description: Survey or census year
+        freq_desc:
+          type: string
+          description: Data frequency
+        begin_code:
+          type: string
+          description: Begin period code
+        end_code:
+          type: string
+          description: End period code
+        reference_period_desc:
+          type: string
+          description: Reference time period
+        week_ending:
+          type: string
+          description: Week ending date (weekly data)
+        load_time:
+          type: string
+          description: Timestamp when data was loaded
+        Value:
+          type: string
+          description: Statistical value (may include commas and formatting)
+        CV (%):
+          type: string
+          description: Coefficient of variation
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key

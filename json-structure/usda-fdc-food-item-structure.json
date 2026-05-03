@@ -1,0 +1,16 @@
+{
+  "name": "USDA FoodData Central Food Item",
+  "description": "Data structure for a USDA FoodData Central food item record",
+  "fields": [
+    {"name": "fdcId", "type": "integer", "description": "FoodData Central unique identifier", "required": true},
+    {"name": "description", "type": "string", "description": "Food item description", "required": true},
+    {"name": "dataType", "type": "string", "description": "Data source type (Foundation, SR Legacy, Branded, etc.)", "required": true},
+    {"name": "publicationDate", "type": "date", "description": "Date published in FDC"},
+    {"name": "brandOwner", "type": "string", "description": "Brand owner (branded foods only)"},
+    {"name": "gtinUpc", "type": "string", "description": "UPC/GTIN barcode (branded foods)"},
+    {"name": "foodCategory", "type": "string", "description": "USDA food category"},
+    {"name": "foodNutrients", "type": "array", "description": "Nutrient values per 100g"},
+    {"name": "servingSize", "type": "number", "description": "Serving size amount"},
+    {"name": "servingSizeUnit", "type": "string", "description": "Serving size unit"}
+  ]
+}

@@ -1,0 +1,103 @@
+vocabulary:
+  name: United States Department of Agriculture Vocabulary
+  description: >-
+    Domain vocabulary for USDA food data, agricultural statistics, farm economics,
+    natural resources, and rural development programs.
+  version: 1.0.0
+  created: '2026-05-03'
+  modified: '2026-05-03'
+
+terms:
+  - term: ARMS
+    label: Agricultural Resource Management Survey
+    definition: >-
+      USDA's primary source of information on the financial condition, production
+      practices, and resource use of America's farm businesses and the economic
+      well-being of America's farm households.
+    domain: Farm Economics
+
+  - term: AWDB
+    label: Air and Water Database
+    definition: >-
+      USDA NRCS database storing snow, water, and climate data from SNOTEL, SCAN,
+      and other monitoring networks used for water resource management and
+      water supply forecasting.
+    domain: Water Resources
+
+  - term: FNDDS
+    label: Food and Nutrient Database for Dietary Studies
+    definition: >-
+      A USDA database used to analyze the nutrient intakes of participants in
+      national dietary surveys, containing data for foods and beverages reported
+      consumed in What We Eat in America.
+    domain: Nutrition
+
+  - term: Foundation Foods
+    label: Foundation Foods
+    definition: >-
+      A FoodData Central data type representing foods with expanded nutrient data
+      including primary agricultural samples, analytical methods, and sampling
+      metadata. The most scientifically rigorous data type in FDC.
+    domain: Nutrition
+
+  - term: Nutrient Number
+    label: USDA Nutrient Number
+    definition: >-
+      A unique identifier assigned by USDA to each nutrient tracked in the food
+      composition databases, used to consistently identify nutrients across
+      different data systems and publications.
+    domain: Nutrition
+
+  - term: Quick Stats
+    label: NASS Quick Stats
+    definition: >-
+      The USDA National Agricultural Statistics Service's online query tool and
+      API providing access to official published aggregate estimates related to
+      U.S. agricultural production, collected through hundreds of surveys each year.
+    domain: Agricultural Statistics
+
+  - term: SCAN
+    label: Soil Climate Analysis Network
+    definition: >-
+      A USDA NRCS network of automated stations that measure soil moisture,
+      soil temperature, air temperature, precipitation, and other climate
+      variables at agricultural and range lands.
+    domain: Water Resources
+
+  - term: SNOTEL
+    label: SNOw TELemetry
+    definition: >-
+      A USDA NRCS automated network of snowpack and climate monitoring stations
+      located primarily in high-elevation mountain watersheds in the western
+      United States, providing data for water supply forecasting.
+    domain: Water Resources
+
+  - term: SWE
+    label: Snow Water Equivalent
+    definition: >-
+      The amount of water contained within the snowpack, measured in inches.
+      A key variable used in water supply forecasting and drought monitoring.
+    domain: Water Resources
+
+  - term: SR Legacy
+    label: Standard Reference Legacy
+    definition: >-
+      The legacy USDA nutrient composition database, formerly known as USDA
+      National Nutrient Database for Standard Reference (SR), containing nutrient
+      data for thousands of foods.
+    domain: Nutrition
+
+  - term: Coefficient of Variation
+    label: Coefficient of Variation (CV)
+    definition: >-
+      A statistical measure of relative variability expressed as a percentage of
+      the estimate. Used by NASS to indicate the reliability of published estimates.
+      Estimates with higher CV values are less reliable.
+    domain: Agricultural Statistics
+
+  - term: FDC ID
+    label: FoodData Central Identifier
+    definition: >-
+      A unique numeric identifier assigned to each food item in the USDA
+      FoodData Central database, used to retrieve specific foods via the API.
+    domain: Nutrition

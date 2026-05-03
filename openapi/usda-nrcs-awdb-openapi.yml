@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: USDA NRCS AWDB Water and Climate REST API
+  description: >-
+    The USDA Natural Resources Conservation Service (NRCS) Air and Water
+    Database (AWDB) REST API provides access to snow, water, and climate
+    monitoring data from SNOTEL (SNOw TELemetry) stations, Soil Climate
+    Analysis Network (SCAN) stations, and other monitoring sites. Supports
+    retrieval of station metadata, current conditions, and historical data
+    for water resource management and forecasting.
+  version: 1.0.0
+  contact:
+    name: USDA NRCS National Water and Climate Center
+    url: https://www.nrcs.usda.gov/programs-initiatives/sswsf-snow-survey-and-water-supply-forecasting-program
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+  - url: https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1
+    description: USDA NRCS AWDB REST API
+tags:
+  - name: Stations
+    description: Monitoring station metadata and discovery
+  - name: Data
+    description: Station data retrieval
+  - name: Forecasts
+    description: Water supply forecasts
+paths:
+  /stations:
+    get:
+      operationId: getStations
+      summary: Get Stations
+      description: >-
+        Retrieve a list of monitoring stations filtered by state, network type,
+        county, hydrologic unit, or bounding box.
+      tags:
+        - Stations
+      parameters:
+        - name: stationIds
+          in: query
+          description: Comma-separated list of station IDs
+          required: false
+          schema:
+            type: string
+          example: '301:ID:SNTL'
+        - name: stateCds
+          in: query
+          description: Comma-separated two-letter state codes
+          required: false
+          schema:
+            type: string
+          example: ID,MT
+        - name: networkCds
+          in: query
+          description: Network codes (SNTL=SNOTEL, SCAN=SCAN)
+          required: false
+          schema:
+            type: string
+            enum:
+              - SNTL
+              - SCAN
+              - SNOW
+              - USGS
+              - BOR
+          example: SNTL
+        - name: minLatitude
+          in: query
+          description: Minimum latitude for bounding box
+          required: false
+          schema:
+            type: number
+        - name: maxLatitude
+          in: query
+          description: Maximum latitude for bounding box
+          required: false
+          schema:
+            type: number
+        - name: minLongitude
+          in: query
+          description: Minimum longitude for bounding box
+          required: false
+          schema:
+            type: number
+        - name: maxLongitude
+          in: query
+          description: Maximum longitude for bounding box
+          required: false
+          schema:
+            type: number
+        - name: minElevation
+          in: query
+          description: Minimum elevation in feet
+          required: false
+          schema:
+            type: integer
+        - name: maxElevation
+          in: query
+          description: Maximum elevation in feet
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of monitoring stations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Station'
+
+  /data:
+    get:
+      operationId: getStationData
+      summary: Get Station Data
+      description: >-
+        Retrieve time-series data for one or more monitoring stations, including
+        snow water equivalent, precipitation, temperature, soil moisture, and
+        other climate variables.
+      tags:
+        - Data
+      parameters:
+        - name: stationIds
+          in: query
+          description: Comma-separated station IDs
+          required: true
+          schema:
+            type: string
+          example: '301:ID:SNTL'
+        - name: elementCds
+          in: query
+          description: >-
+            Element codes to retrieve (WTEQ=Snow Water Equivalent,
+            PREC=Precipitation, TOBS=Air Temperature Observed,
+            SMS=Soil Moisture)
+          required: true
+          schema:
+            type: string
+          example: WTEQ,PREC,TOBS
+        - name: beginDate
+          in: query
+          description: Start date (YYYY-MM-DD)
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: End date (YYYY-MM-DD)
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2024-04-30'
+        - name: duration
+          in: query
+          description: Data duration/temporal resolution
+          required: false
+          schema:
+            type: string
+            enum:
+              - DAILY
+              - MONTHLY
+              - ANNUAL
+            default: DAILY
+      responses:
+        '200':
+          description: Station time-series data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationData'
+
+  /forecasts:
+    get:
+      operationId: getWaterSupplyForecasts
+      summary: Get Water Supply Forecasts
+      description: >-
+        Retrieve water supply forecasts for forecast points, including
+        streamflow volume forecasts by probability exceedance levels.
+      tags:
+        - Forecasts
+      parameters:
+        - name: stationIds
+          in: query
+          description: Forecast point station IDs
+          required: false
+          schema:
+            type: string
+        - name: stateCds
+          in: query
+          description: State codes to filter forecasts
+          required: false
+          schema:
+            type: string
+          example: ID
+        - name: forecastPeriodCds
+          in: query
+          description: Forecast period codes (e.g. JAN-SEP)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Water supply forecasts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterForecast'
+
+components:
+  schemas:
+    Station:
+      type: object
+      description: A SNOTEL or SCAN monitoring station
+      properties:
+        stationId:
+          type: string
+          description: "Station identifier (e.g. '301:ID:SNTL')"
+        name:
+          type: string
+          description: Station name
+        state:
+          type: string
+          description: State code
+        networkCode:
+          type: string
+          description: Network code (SNTL, SCAN, etc.)
+        latitude:
+          type: number
+          description: Station latitude
+        longitude:
+          type: number
+          description: Station longitude
+        elevation:
+          type: integer
+          description: Station elevation in feet
+        countyCode:
+          type: string
+          description: County FIPS code
+        huc:
+          type: string
+          description: Hydrologic Unit Code
+        beginDate:
+          type: string
+          format: date
+          description: Date station data collection began
+        endDate:
+          type: string
+          format: date
+          description: Date station data collection ended (null if active)
+
+    StationData:
+      type: object
+      description: Time-series data from a monitoring station
+      properties:
+        stationId:
+          type: string
+          description: Station identifier
+        elementCode:
+          type: string
+          description: Measurement element code
+        elementName:
+          type: string
+          description: Measurement element name
+        storedUnitCode:
+          type: string
+          description: Unit of measurement
+        duration:
+          type: string
+          description: Temporal resolution
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Measurement date
+              value:
+                type: number
+                description: Measured value
+              qualityControlCode:
+                type: string
+                description: Data quality indicator
+
+    WaterForecast:
+      type: object
+      description: Water supply forecast record
+      properties:
+        stationId:
+          type: string
+          description: Forecast point station ID
+        stationName:
+          type: string
+          description: Station name
+        state:
+          type: string
+          description: State code
+        forecastPeriod:
+          type: string
+          description: Forecast period (e.g. JAN-SEP)
+        issuedDate:
+          type: string
+          format: date
+          description: Date forecast was issued
+        forecastValues:
+          type: array
+          items:
+            type: object
+            properties:
+              exceedanceProbability:
+                type: integer
+                description: Exceedance probability percentage (10, 30, 50, 70, 90)
+              volumeKAF:
+                type: number
+                description: Forecast volume in thousand acre-feet

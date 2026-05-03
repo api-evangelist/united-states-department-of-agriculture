@@ -1,0 +1,279 @@
+openapi: 3.0.3
+info:
+  title: USDA ERS ARMS Data API
+  description: >-
+    The USDA Economic Research Service (ERS) Agricultural Resource Management
+    Survey (ARMS) Data API provides access to data on farm finances, production
+    practices, and resource use for U.S. farms. Supports attribute-based
+    querying of farm income, balance sheet, costs, and production data by year,
+    state, and report type. An API key from api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA Economic Research Service
+    url: https://www.ers.usda.gov/developer/
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+  - url: https://api.ers.usda.gov/data/arms
+    description: USDA ERS ARMS Data API
+tags:
+  - name: Survey Data
+    description: Farm survey data retrieval
+  - name: Metadata
+    description: Available years, states, reports, and variables
+paths:
+  /year:
+    get:
+      operationId: getAvailableYears
+      summary: Get Available Survey Years
+      description: >-
+        Retrieve all years for which ARMS survey data is available.
+      tags:
+        - Metadata
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+      responses:
+        '200':
+          description: List of available survey years
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        year:
+                          type: integer
+                          description: Survey year
+
+  /state:
+    get:
+      operationId: getAvailableStates
+      summary: Get Available States
+      description: >-
+        Retrieve all states and associated metadata and variables available
+        for ARMS survey data.
+      tags:
+        - Metadata
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+      responses:
+        '200':
+          description: List of states with available data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        state:
+                          type: string
+                        stateName:
+                          type: string
+
+  /report:
+    get:
+      operationId: getAvailableReports
+      summary: Get Available Reports
+      description: >-
+        Retrieve available ARMS reports with their metadata and variables.
+        Reports represent different survey focus areas such as farm income,
+        balance sheet, and production costs.
+      tags:
+        - Metadata
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+      responses:
+        '200':
+          description: List of available ARMS reports
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        report:
+                          type: string
+                        reportTitle:
+                          type: string
+                        description:
+                          type: string
+
+  /variable:
+    get:
+      operationId: getAvailableVariables
+      summary: Get Available Variables
+      description: >-
+        Retrieve all ARMS variables with their information and metadata,
+        including variable codes, descriptions, and units.
+      tags:
+        - Metadata
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+        - name: report
+          in: query
+          description: Filter variables by report name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of ARMS variables
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        variable:
+                          type: string
+                        variableLabel:
+                          type: string
+                        description:
+                          type: string
+                        units:
+                          type: string
+
+  /surveydata:
+    get:
+      operationId: getSurveyData
+      summary: Get ARMS Survey Data
+      description: >-
+        Retrieve ARMS farm survey data by year, state, report, and variable.
+        Year is required; at least one of report or variable is also required.
+        Supports GET and POST methods.
+      tags:
+        - Survey Data
+      parameters:
+        - name: api_key
+          in: query
+          description: API key from api.data.gov
+          required: true
+          schema:
+            type: string
+          example: DEMO_KEY
+        - name: year
+          in: query
+          description: Survey year (required)
+          required: true
+          schema:
+            type: integer
+          example: 2022
+        - name: report
+          in: query
+          description: Report name to retrieve data for
+          required: false
+          schema:
+            type: string
+          example: farm_income
+        - name: variable
+          in: query
+          description: Specific variable code(s) to retrieve
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: Two-letter state abbreviation or NATIONAL
+          required: false
+          schema:
+            type: string
+          example: IA
+      responses:
+        '200':
+          description: ARMS farm survey data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ARMSRecord'
+
+components:
+  schemas:
+    ARMSRecord:
+      type: object
+      description: An ARMS farm survey data record
+      properties:
+        year:
+          type: integer
+          description: Survey year
+        state:
+          type: string
+          description: State code
+        stateName:
+          type: string
+          description: Full state name
+        report:
+          type: string
+          description: Report category
+        variable:
+          type: string
+          description: Variable code
+        variableLabel:
+          type: string
+          description: Variable label
+        estimate:
+          type: number
+          description: Statistical estimate value
+        se:
+          type: number
+          description: Standard error
+        rse:
+          type: number
+          description: Relative standard error
+        units:
+          type: string
+          description: Unit of measurement
+        farmType:
+          type: string
+          description: Farm typology classification
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

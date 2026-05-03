@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/main/json-schema/usda-fdc-food-item-schema.json",
+  "title": "USDA FoodData Central Food Item",
+  "description": "Schema for a food item from the USDA FoodData Central database",
+  "type": "object",
+  "properties": {
+    "fdcId": {
+      "type": "integer",
+      "description": "FoodData Central unique identifier"
+    },
+    "description": {
+      "type": "string",
+      "description": "Food item description"
+    },
+    "dataType": {
+      "type": "string",
+      "description": "Food data type source",
+      "enum": ["Foundation", "SR Legacy", "Branded", "Survey (FNDDS)", "Experimental"]
+    },
+    "publicationDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the food item was published in FDC"
+    },
+    "brandOwner": {
+      "type": "string",
+      "description": "Brand owner for branded food items"
+    },
+    "gtinUpc": {
+      "type": "string",
+      "description": "GTIN or UPC barcode for branded items"
+    },
+    "foodCategory": {
+      "type": "string",
+      "description": "USDA food category"
+    },
+    "foodNutrients": {
+      "type": "array",
+      "description": "Nutrient values per 100g of food",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nutrientId": {"type": "integer"},
+          "nutrientName": {"type": "string"},
+          "nutrientNumber": {"type": "string"},
+          "unitName": {"type": "string"},
+          "value": {"type": "number"}
+        }
+      }
+    },
+    "servingSize": {
+      "type": "number",
+      "description": "Serving size amount"
+    },
+    "servingSizeUnit": {
+      "type": "string",
+      "description": "Unit for serving size"
+    }
+  },
+  "required": ["fdcId", "description", "dataType"]
+}
