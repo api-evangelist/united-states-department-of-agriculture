@@ -1,201 +1,358 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "USDA Food and Agriculture Data Research"
-  description: >-
-    Unified capability for food and agricultural data research workflows
-    combining USDA FoodData Central nutrient data with NASS agricultural
-    production statistics. Used by nutritionists, food researchers, public
-    health analysts, and agricultural economists to access comprehensive USDA
-    food and farm data.
+  label: USDA Food and Agriculture Data Research
+  description: Unified capability for food and agricultural data research workflows combining USDA FoodData Central nutrient
+    data with NASS agricultural production statistics. Used by nutritionists, food researchers, public health analysts, and
+    agricultural economists to access comprehensive USDA food and farm data.
   tags:
-    - Food
-    - Nutrition
-    - Agriculture
-    - Statistics
-    - USDA
-    - Federal Government
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - Food
+  - Nutrition
+  - Agriculture
+  - Statistics
+  - USDA
+  - Federal Government
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      FDC_API_KEY: FDC_API_KEY
-      NASS_API_KEY: NASS_API_KEY
-
+- namespace: env
+  keys:
+    FDC_API_KEY: FDC_API_KEY
+    NASS_API_KEY: NASS_API_KEY
 capability:
   consumes:
-    - import: fdc
-      location: ./shared/usda-fooddata-central.yaml
-    - import: nass
-      location: ./shared/usda-nass-quickstats.yaml
-
+  - type: http
+    namespace: fdc
+    baseUri: https://api.nal.usda.gov/fdc/v1
+    description: USDA FoodData Central REST API
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{FDC_API_KEY}}'
+      placement: query
+    resources:
+    - name: food-search
+      path: /foods/search
+      description: Search for foods by keywords and filters
+      operations:
+      - name: search-foods
+        method: GET
+        description: Search Foods
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          required: true
+          description: Search terms
+        - name: dataType
+          in: query
+          type: string
+          required: false
+          description: Food data type filter
+        - name: pageSize
+          in: query
+          type: integer
+          required: false
+          description: Results per page
+        - name: pageNumber
+          in: query
+          type: integer
+          required: false
+          description: Page number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: food-detail
+      path: /food/{fdcId}
+      description: Get detailed food item with nutrient data
+      operations:
+      - name: get-food-by-id
+        method: GET
+        description: Get Food By FDC ID
+        inputParameters:
+        - name: fdcId
+          in: path
+          type: integer
+          required: true
+          description: FoodData Central food ID
+        - name: format
+          in: query
+          type: string
+          required: false
+          description: abridged or full nutrient format
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: nutrients
+      path: /nutrients
+      description: List all available nutrients
+      operations:
+      - name: get-nutrients
+        method: GET
+        description: Get All Nutrients
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: array
+          value: $.
+  - type: http
+    namespace: nass
+    baseUri: https://quickstats.nass.usda.gov/api
+    description: USDA NASS Quick Stats API
+    authentication:
+      type: apikey
+      key: key
+      value: '{{NASS_API_KEY}}'
+      placement: query
+    resources:
+    - name: statistics
+      path: /api_GET/
+      description: Query agricultural statistics data
+      operations:
+      - name: get-agricultural-statistics
+        method: GET
+        description: Get Agricultural Statistics
+        inputParameters:
+        - name: commodity_desc
+          in: query
+          type: string
+          required: false
+          description: Commodity name (e.g. CORN, WHEAT)
+        - name: statisticcat_desc
+          in: query
+          type: string
+          required: false
+          description: Statistics category
+        - name: year
+          in: query
+          type: string
+          required: false
+          description: Survey year
+        - name: state_name
+          in: query
+          type: string
+          required: false
+          description: State name
+        - name: agg_level_desc
+          in: query
+          type: string
+          required: false
+          description: Geographic aggregation level
+        - name: format
+          in: query
+          type: string
+          required: false
+          description: Response format (JSON, CSV, XML)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: parameter-values
+      path: /get_param_values/
+      description: Look up valid values for a query parameter
+      operations:
+      - name: get-parameter-values
+        method: GET
+        description: Get Valid Parameter Values
+        inputParameters:
+        - name: param
+          in: query
+          type: string
+          required: true
+          description: Parameter name to look up values for
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: counts
+      path: /get_counts/
+      description: Get record count for a query
+      operations:
+      - name: get-record-count
+        method: GET
+        description: Get Record Count
+        inputParameters:
+        - name: commodity_desc
+          in: query
+          type: string
+          required: false
+          description: Commodity to count records for
+        - name: year
+          in: query
+          type: string
+          required: false
+          description: Year filter
+        - name: state_name
+          in: query
+          type: string
+          required: false
+          description: State filter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: usda-food-ag-api
-      description: "Unified REST API for USDA food nutrition and agricultural statistics research."
-      resources:
-        - path: /v1/foods/search
-          name: food-search
-          description: "Search USDA FoodData Central for food items"
-          operations:
-            - method: GET
-              name: search-foods
-              description: "Search for foods by keyword across all USDA food data types"
-              call: "fdc.search-foods"
-              with:
-                query: "rest.query"
-                dataType: "rest.dataType"
-                pageSize: "rest.pageSize"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/foods/{fdcId}
-          name: food-detail
-          description: "Retrieve full nutrient profile for a specific food"
-          operations:
-            - method: GET
-              name: get-food
-              description: "Get food item with complete nutrient data"
-              call: "fdc.get-food-by-id"
-              with:
-                fdcId: "rest.fdcId"
-                format: "rest.format"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/nutrients
-          name: nutrients
-          description: "List all nutrients tracked in FoodData Central"
-          operations:
-            - method: GET
-              name: list-nutrients
-              description: "Get all available nutrients"
-              call: "fdc.get-nutrients"
-              with: {}
-              outputParameters:
-                - type: array
-                  mapping: "$."
-
-        - path: /v1/agriculture/statistics
-          name: ag-statistics
-          description: "Query USDA NASS agricultural production statistics"
-          operations:
-            - method: GET
-              name: get-ag-statistics
-              description: "Get agricultural commodity production statistics"
-              call: "nass.get-agricultural-statistics"
-              with:
-                commodity_desc: "rest.commodity"
-                statisticcat_desc: "rest.category"
-                year: "rest.year"
-                state_name: "rest.state"
-                agg_level_desc: "rest.aggLevel"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/agriculture/parameters
-          name: ag-parameters
-          description: "Look up valid values for statistics query parameters"
-          operations:
-            - method: GET
-              name: get-parameter-values
-              description: "Get valid values for a NASS statistics parameter"
-              call: "nass.get-parameter-values"
-              with:
-                param: "rest.param"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: usda-food-ag-mcp
-      transport: http
-      description: "MCP server for AI-assisted food nutrition and agricultural data research."
-      tools:
-        - name: search-foods
-          description: "Search USDA FoodData Central for food items using keywords"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "fdc.search-foods"
-          with:
-            query: "tools.query"
-            dataType: "tools.data_type"
-            pageSize: "tools.page_size"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-food-nutrition
-          description: "Get detailed nutrient profile for a specific food item from USDA FoodData Central"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "fdc.get-food-by-id"
-          with:
-            fdcId: "tools.fdc_id"
-            format: "tools.format"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-nutrients
-          description: "List all nutrients tracked in USDA FoodData Central including IDs, names, and units"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "fdc.get-nutrients"
-          with: {}
-          outputParameters:
-            - type: array
-              mapping: "$."
-
-        - name: get-crop-production-statistics
-          description: "Query USDA NASS for crop production statistics by commodity, year, and state"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "nass.get-agricultural-statistics"
-          with:
-            commodity_desc: "tools.commodity"
-            statisticcat_desc: "tools.category"
-            year: "tools.year"
-            state_name: "tools.state"
-            agg_level_desc: "tools.agg_level"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-livestock-statistics
-          description: "Query USDA NASS for livestock and animal production statistics"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "nass.get-agricultural-statistics"
-          with:
-            commodity_desc: "tools.commodity"
-            statisticcat_desc: "tools.category"
-            year: "tools.year"
-            state_name: "tools.state"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-nass-parameter-values
-          description: "Look up valid values for NASS statistics query parameters to build accurate queries"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "nass.get-parameter-values"
-          with:
-            param: "tools.param_name"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: usda-food-ag-api
+    description: Unified REST API for USDA food nutrition and agricultural statistics research.
+    resources:
+    - path: /v1/foods/search
+      name: food-search
+      description: Search USDA FoodData Central for food items
+      operations:
+      - method: GET
+        name: search-foods
+        description: Search for foods by keyword across all USDA food data types
+        call: fdc.search-foods
+        with:
+          query: rest.query
+          dataType: rest.dataType
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/foods/{fdcId}
+      name: food-detail
+      description: Retrieve full nutrient profile for a specific food
+      operations:
+      - method: GET
+        name: get-food
+        description: Get food item with complete nutrient data
+        call: fdc.get-food-by-id
+        with:
+          fdcId: rest.fdcId
+          format: rest.format
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/nutrients
+      name: nutrients
+      description: List all nutrients tracked in FoodData Central
+      operations:
+      - method: GET
+        name: list-nutrients
+        description: Get all available nutrients
+        call: fdc.get-nutrients
+        with: {}
+        outputParameters:
+        - type: array
+          mapping: $.
+    - path: /v1/agriculture/statistics
+      name: ag-statistics
+      description: Query USDA NASS agricultural production statistics
+      operations:
+      - method: GET
+        name: get-ag-statistics
+        description: Get agricultural commodity production statistics
+        call: nass.get-agricultural-statistics
+        with:
+          commodity_desc: rest.commodity
+          statisticcat_desc: rest.category
+          year: rest.year
+          state_name: rest.state
+          agg_level_desc: rest.aggLevel
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/agriculture/parameters
+      name: ag-parameters
+      description: Look up valid values for statistics query parameters
+      operations:
+      - method: GET
+        name: get-parameter-values
+        description: Get valid values for a NASS statistics parameter
+        call: nass.get-parameter-values
+        with:
+          param: rest.param
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: usda-food-ag-mcp
+    transport: http
+    description: MCP server for AI-assisted food nutrition and agricultural data research.
+    tools:
+    - name: search-foods
+      description: Search USDA FoodData Central for food items using keywords
+      hints:
+        readOnly: true
+        idempotent: true
+      call: fdc.search-foods
+      with:
+        query: tools.query
+        dataType: tools.data_type
+        pageSize: tools.page_size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-food-nutrition
+      description: Get detailed nutrient profile for a specific food item from USDA FoodData Central
+      hints:
+        readOnly: true
+        idempotent: true
+      call: fdc.get-food-by-id
+      with:
+        fdcId: tools.fdc_id
+        format: tools.format
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-nutrients
+      description: List all nutrients tracked in USDA FoodData Central including IDs, names, and units
+      hints:
+        readOnly: true
+        idempotent: true
+      call: fdc.get-nutrients
+      with: {}
+      outputParameters:
+      - type: array
+        mapping: $.
+    - name: get-crop-production-statistics
+      description: Query USDA NASS for crop production statistics by commodity, year, and state
+      hints:
+        readOnly: true
+        idempotent: true
+      call: nass.get-agricultural-statistics
+      with:
+        commodity_desc: tools.commodity
+        statisticcat_desc: tools.category
+        year: tools.year
+        state_name: tools.state
+        agg_level_desc: tools.agg_level
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-livestock-statistics
+      description: Query USDA NASS for livestock and animal production statistics
+      hints:
+        readOnly: true
+        idempotent: true
+      call: nass.get-agricultural-statistics
+      with:
+        commodity_desc: tools.commodity
+        statisticcat_desc: tools.category
+        year: tools.year
+        state_name: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-nass-parameter-values
+      description: Look up valid values for NASS statistics query parameters to build accurate queries
+      hints:
+        readOnly: true
+        idempotent: true
+      call: nass.get-parameter-values
+      with:
+        param: tools.param_name
+      outputParameters:
+      - type: object
+        mapping: $.
