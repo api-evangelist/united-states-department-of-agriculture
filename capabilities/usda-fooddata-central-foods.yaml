@@ -1,0 +1,241 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: USDA FoodData Central API — Foods
+  description: 'USDA FoodData Central API — Foods. 3 operations. Lead operation: Get Food By FDC ID. Self-contained Naftiko
+    capability covering one United States Department Of Agriculture business surface.'
+  tags:
+  - United States Department Of Agriculture
+  - Foods
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY: UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: usda-fooddata-central-foods
+    baseUri: https://api.nal.usda.gov/fdc/v1
+    description: USDA FoodData Central API — Foods business capability. Self-contained, no shared references.
+    resources:
+    - name: food-fdcId
+      path: /food/{fdcId}
+      operations:
+      - name: getfoodbyid
+        method: GET
+        description: Get Food By FDC ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fdcId
+          in: path
+          type: integer
+          description: FoodData Central unique food identifier
+          required: true
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: Nutrient data format to return
+        - name: nutrients
+          in: query
+          type: array
+          description: Filter to specific nutrient IDs (up to 25)
+    - name: foods
+      path: /foods
+      operations:
+      - name: getfoodsbyids
+        method: GET
+        description: Get Multiple Foods By FDC IDs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+        - name: fdcIds
+          in: query
+          type: array
+          description: Comma-separated list of FDC IDs (max 20)
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: Nutrient data format to return
+        - name: nutrients
+          in: query
+          type: array
+          description: Filter to specific nutrient IDs
+    - name: foods-search
+      path: /foods/search
+      operations:
+      - name: searchfoods
+        method: GET
+        description: Search Foods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+        - name: query
+          in: query
+          type: string
+          description: Search terms to find foods
+          required: true
+        - name: dataType
+          in: query
+          type: array
+          description: Filter by food data type
+        - name: pageSize
+          in: query
+          type: integer
+          description: Number of results per page (max 200)
+        - name: pageNumber
+          in: query
+          type: integer
+          description: Page number for paginated results
+        - name: sortBy
+          in: query
+          type: string
+          description: Field to sort results by
+        - name: sortOrder
+          in: query
+          type: string
+          description: Sort direction
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: usda-fooddata-central-foods-rest
+    port: 8080
+    description: REST adapter for USDA FoodData Central API — Foods. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/food/{fdcid}
+      name: food-fdcid
+      description: REST surface for food-fdcId.
+      operations:
+      - method: GET
+        name: getfoodbyid
+        description: Get Food By FDC ID
+        call: usda-fooddata-central-foods.getfoodbyid
+        with:
+          fdcId: rest.fdcId
+          api_key: rest.api_key
+          format: rest.format
+          nutrients: rest.nutrients
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/foods
+      name: foods
+      description: REST surface for foods.
+      operations:
+      - method: GET
+        name: getfoodsbyids
+        description: Get Multiple Foods By FDC IDs
+        call: usda-fooddata-central-foods.getfoodsbyids
+        with:
+          api_key: rest.api_key
+          fdcIds: rest.fdcIds
+          format: rest.format
+          nutrients: rest.nutrients
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/foods/search
+      name: foods-search
+      description: REST surface for foods-search.
+      operations:
+      - method: GET
+        name: searchfoods
+        description: Search Foods
+        call: usda-fooddata-central-foods.searchfoods
+        with:
+          api_key: rest.api_key
+          query: rest.query
+          dataType: rest.dataType
+          pageSize: rest.pageSize
+          pageNumber: rest.pageNumber
+          sortBy: rest.sortBy
+          sortOrder: rest.sortOrder
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: usda-fooddata-central-foods-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for USDA FoodData Central API — Foods. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-food-fdc-id
+      description: Get Food By FDC ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-fooddata-central-foods.getfoodbyid
+      with:
+        fdcId: tools.fdcId
+        api_key: tools.api_key
+        format: tools.format
+        nutrients: tools.nutrients
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-multiple-foods-fdc-ids
+      description: Get Multiple Foods By FDC IDs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-fooddata-central-foods.getfoodsbyids
+      with:
+        api_key: tools.api_key
+        fdcIds: tools.fdcIds
+        format: tools.format
+        nutrients: tools.nutrients
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-foods
+      description: Search Foods
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-fooddata-central-foods.searchfoods
+      with:
+        api_key: tools.api_key
+        query: tools.query
+        dataType: tools.dataType
+        pageSize: tools.pageSize
+        pageNumber: tools.pageNumber
+        sortBy: tools.sortBy
+        sortOrder: tools.sortOrder
+      outputParameters:
+      - type: object
+        mapping: $.

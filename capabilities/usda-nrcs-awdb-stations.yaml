@@ -1,0 +1,124 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: USDA NRCS AWDB Water and Climate REST API — Stations
+  description: 'USDA NRCS AWDB Water and Climate REST API — Stations. 1 operations. Lead operation: Get Stations. Self-contained
+    Naftiko capability covering one United States Department Of Agriculture business surface.'
+  tags:
+  - United States Department Of Agriculture
+  - Stations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY: UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: usda-nrcs-awdb-stations
+    baseUri: https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1
+    description: USDA NRCS AWDB Water and Climate REST API — Stations business capability. Self-contained, no shared references.
+    resources:
+    - name: stations
+      path: /stations
+      operations:
+      - name: getstations
+        method: GET
+        description: Get Stations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: stationIds
+          in: query
+          type: string
+          description: Comma-separated list of station IDs
+        - name: stateCds
+          in: query
+          type: string
+          description: Comma-separated two-letter state codes
+        - name: networkCds
+          in: query
+          type: string
+          description: Network codes (SNTL=SNOTEL, SCAN=SCAN)
+        - name: minLatitude
+          in: query
+          type: number
+          description: Minimum latitude for bounding box
+        - name: maxLatitude
+          in: query
+          type: number
+          description: Maximum latitude for bounding box
+        - name: minLongitude
+          in: query
+          type: number
+          description: Minimum longitude for bounding box
+        - name: maxLongitude
+          in: query
+          type: number
+          description: Maximum longitude for bounding box
+        - name: minElevation
+          in: query
+          type: integer
+          description: Minimum elevation in feet
+        - name: maxElevation
+          in: query
+          type: integer
+          description: Maximum elevation in feet
+  exposes:
+  - type: rest
+    namespace: usda-nrcs-awdb-stations-rest
+    port: 8080
+    description: REST adapter for USDA NRCS AWDB Water and Climate REST API — Stations. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/stations
+      name: stations
+      description: REST surface for stations.
+      operations:
+      - method: GET
+        name: getstations
+        description: Get Stations
+        call: usda-nrcs-awdb-stations.getstations
+        with:
+          stationIds: rest.stationIds
+          stateCds: rest.stateCds
+          networkCds: rest.networkCds
+          minLatitude: rest.minLatitude
+          maxLatitude: rest.maxLatitude
+          minLongitude: rest.minLongitude
+          maxLongitude: rest.maxLongitude
+          minElevation: rest.minElevation
+          maxElevation: rest.maxElevation
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: usda-nrcs-awdb-stations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for USDA NRCS AWDB Water and Climate REST API — Stations. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-stations
+      description: Get Stations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-nrcs-awdb-stations.getstations
+      with:
+        stationIds: tools.stationIds
+        stateCds: tools.stateCds
+        networkCds: tools.networkCds
+        minLatitude: tools.minLatitude
+        maxLatitude: tools.maxLatitude
+        minLongitude: tools.minLongitude
+        maxLongitude: tools.maxLongitude
+        minElevation: tools.minElevation
+        maxElevation: tools.maxElevation
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: USDA NASS Quick Stats API — Metadata
+  description: 'USDA NASS Quick Stats API — Metadata. 1 operations. Lead operation: Get Valid Parameter Values. Self-contained
+    Naftiko capability covering one United States Department Of Agriculture business surface.'
+  tags:
+  - United States Department Of Agriculture
+  - Metadata
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY: UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: usda-nass-quickstats-metadata
+    baseUri: https://quickstats.nass.usda.gov/api
+    description: USDA NASS Quick Stats API — Metadata business capability. Self-contained, no shared references.
+    resources:
+    - name: get_param_values
+      path: /get_param_values/
+      operations:
+      - name: getparametervalues
+        method: GET
+        description: Get Valid Parameter Values
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          description: NASS API key
+          required: true
+        - name: param
+          in: query
+          type: string
+          description: Parameter name to retrieve values for
+          required: true
+    authentication:
+      type: apikey
+      key: key
+      value: '{{env.UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: usda-nass-quickstats-metadata-rest
+    port: 8080
+    description: REST adapter for USDA NASS Quick Stats API — Metadata. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/get-param-values
+      name: get-param-values
+      description: REST surface for get_param_values.
+      operations:
+      - method: GET
+        name: getparametervalues
+        description: Get Valid Parameter Values
+        call: usda-nass-quickstats-metadata.getparametervalues
+        with:
+          key: rest.key
+          param: rest.param
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: usda-nass-quickstats-metadata-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for USDA NASS Quick Stats API — Metadata. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-valid-parameter-values
+      description: Get Valid Parameter Values
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-nass-quickstats-metadata.getparametervalues
+      with:
+        key: tools.key
+        param: tools.param
+      outputParameters:
+      - type: object
+        mapping: $.

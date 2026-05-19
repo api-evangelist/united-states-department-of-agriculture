@@ -1,0 +1,214 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: USDA ERS ARMS Data API — Metadata
+  description: 'USDA ERS ARMS Data API — Metadata. 4 operations. Lead operation: Get Available Reports. Self-contained Naftiko
+    capability covering one United States Department Of Agriculture business surface.'
+  tags:
+  - United States Department Of Agriculture
+  - Metadata
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY: UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: usda-ers-arms-metadata
+    baseUri: https://api.ers.usda.gov/data/arms
+    description: USDA ERS ARMS Data API — Metadata business capability. Self-contained, no shared references.
+    resources:
+    - name: report
+      path: /report
+      operations:
+      - name: getavailablereports
+        method: GET
+        description: Get Available Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+    - name: state
+      path: /state
+      operations:
+      - name: getavailablestates
+        method: GET
+        description: Get Available States
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+    - name: variable
+      path: /variable
+      operations:
+      - name: getavailablevariables
+        method: GET
+        description: Get Available Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+        - name: report
+          in: query
+          type: string
+          description: Filter variables by report name
+    - name: year
+      path: /year
+      operations:
+      - name: getavailableyears
+        method: GET
+        description: Get Available Survey Years
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key
+          in: query
+          type: string
+          description: API key from api.data.gov
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.UNITED_STATES_DEPARTMENT_OF_AGRICULTURE_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: usda-ers-arms-metadata-rest
+    port: 8080
+    description: REST adapter for USDA ERS ARMS Data API — Metadata. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/report
+      name: report
+      description: REST surface for report.
+      operations:
+      - method: GET
+        name: getavailablereports
+        description: Get Available Reports
+        call: usda-ers-arms-metadata.getavailablereports
+        with:
+          api_key: rest.api_key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/state
+      name: state
+      description: REST surface for state.
+      operations:
+      - method: GET
+        name: getavailablestates
+        description: Get Available States
+        call: usda-ers-arms-metadata.getavailablestates
+        with:
+          api_key: rest.api_key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/variable
+      name: variable
+      description: REST surface for variable.
+      operations:
+      - method: GET
+        name: getavailablevariables
+        description: Get Available Variables
+        call: usda-ers-arms-metadata.getavailablevariables
+        with:
+          api_key: rest.api_key
+          report: rest.report
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/year
+      name: year
+      description: REST surface for year.
+      operations:
+      - method: GET
+        name: getavailableyears
+        description: Get Available Survey Years
+        call: usda-ers-arms-metadata.getavailableyears
+        with:
+          api_key: rest.api_key
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: usda-ers-arms-metadata-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for USDA ERS ARMS Data API — Metadata. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-available-reports
+      description: Get Available Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-ers-arms-metadata.getavailablereports
+      with:
+        api_key: tools.api_key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-available-states
+      description: Get Available States
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-ers-arms-metadata.getavailablestates
+      with:
+        api_key: tools.api_key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-available-variables
+      description: Get Available Variables
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-ers-arms-metadata.getavailablevariables
+      with:
+        api_key: tools.api_key
+        report: tools.report
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-available-survey-years
+      description: Get Available Survey Years
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: usda-ers-arms-metadata.getavailableyears
+      with:
+        api_key: tools.api_key
+      outputParameters:
+      - type: object
+        mapping: $.
