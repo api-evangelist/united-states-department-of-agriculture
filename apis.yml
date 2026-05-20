@@ -1,5 +1,10 @@
 aid: united-states-department-of-agriculture
 url: https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/apis.yml
+common:
+  - type: GitHubOrganization
+    url: https://github.com/usda
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/usda
 apis:
 - aid: united-states-department-of-agriculture:usda-fooddata-central-api
   name: USDA FoodData Central API
