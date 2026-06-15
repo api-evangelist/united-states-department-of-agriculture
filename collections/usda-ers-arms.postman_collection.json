@@ -1,0 +1,503 @@
+{
+  "item": [
+    {
+      "id": "2e335f31-f5d6-4649-97d1-f39d8f9faf73",
+      "name": "Survey Data",
+      "description": {
+        "content": "Farm survey data retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "96df83d2-a26b-44f8-9933-cc42fc487c4d",
+          "name": "Get ARMS Survey Data",
+          "request": {
+            "name": "Get ARMS Survey Data",
+            "description": {
+              "content": "Retrieve ARMS farm survey data by year, state, report, and variable. Year is required; at least one of report or variable is also required. Supports GET and POST methods.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "surveydata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "(Required) Survey year (required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "report",
+                  "value": "<string>",
+                  "description": "Report name to retrieve data for"
+                },
+                {
+                  "disabled": false,
+                  "key": "variable",
+                  "value": "<string>",
+                  "description": "Specific variable code(s) to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Two-letter state abbreviation or NATIONAL"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1cdb1fad-a525-4719-8439-667dc485bf18",
+              "name": "ARMS farm survey data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "surveydata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    },
+                    {
+                      "key": "report",
+                      "value": "farm_income"
+                    },
+                    {
+                      "key": "variable",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "IA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"year\": 6748,\n      \"state\": \"string\",\n      \"stateName\": \"string\",\n      \"report\": \"string\",\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"estimate\": 4858.16945546457,\n      \"se\": 2239.607215525482,\n      \"rse\": 2678.849289688986,\n      \"units\": \"string\",\n      \"farmType\": \"string\"\n    },\n    {\n      \"year\": 7463,\n      \"state\": \"string\",\n      \"stateName\": \"string\",\n      \"report\": \"string\",\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"estimate\": 2289.6658376656765,\n      \"se\": 8881.168944096913,\n      \"rse\": 9046.096164922246,\n      \"units\": \"string\",\n      \"farmType\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "bcf23e5c-e6d8-406f-8f3d-527e993d4592",
+      "name": "Metadata",
+      "description": {
+        "content": "Available years, states, reports, and variables",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e608d86a-8017-4ee5-9e91-3fcf930b9bf5",
+          "name": "Get Available Survey Years",
+          "request": {
+            "name": "Get Available Survey Years",
+            "description": {
+              "content": "Retrieve all years for which ARMS survey data is available.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "year"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e01a180-b00a-4412-9e13-a9b2a1114aa2",
+              "name": "List of available survey years",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "year"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"year\": 3712\n    },\n    {\n      \"year\": 4972\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90905a0f-b95a-4f16-aa1f-6eaf4df6dcc4",
+          "name": "Get Available States",
+          "request": {
+            "name": "Get Available States",
+            "description": {
+              "content": "Retrieve all states and associated metadata and variables available for ARMS survey data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "state"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad1f4fbe-90c2-46bc-8079-d0134984d5e3",
+              "name": "List of states with available data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"state\": \"string\",\n      \"stateName\": \"string\"\n    },\n    {\n      \"state\": \"string\",\n      \"stateName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb4e4e84-737a-45be-b029-4d56ec96c17e",
+          "name": "Get Available Reports",
+          "request": {
+            "name": "Get Available Reports",
+            "description": {
+              "content": "Retrieve available ARMS reports with their metadata and variables. Reports represent different survey focus areas such as farm income, balance sheet, and production costs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c7bf898-0c7e-4c5a-b0e0-0b5ac3edf134",
+              "name": "List of available ARMS reports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"report\": \"string\",\n      \"reportTitle\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"report\": \"string\",\n      \"reportTitle\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "234b62bd-00b0-4f5c-a8be-36451be141a2",
+          "name": "Get Available Variables",
+          "request": {
+            "name": "Get Available Variables",
+            "description": {
+              "content": "Retrieve all ARMS variables with their information and metadata, including variable codes, descriptions, and units.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "variable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                },
+                {
+                  "disabled": false,
+                  "key": "report",
+                  "value": "<string>",
+                  "description": "Filter variables by report name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "306b23c4-502a-42ae-a362-322b0de7d946",
+              "name": "List of ARMS variables",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    },
+                    {
+                      "key": "report",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"description\": \"string\",\n      \"units\": \"string\"\n    },\n    {\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"description\": \"string\",\n      \"units\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ers.usda.gov/data/arms",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e4ef255d-e8cb-4d76-a931-77076e68ab51",
+    "name": "USDA ERS ARMS Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.\n\nContact Support:\n Name: USDA Economic Research Service",
+      "type": "text/plain"
+    }
+  }
+}

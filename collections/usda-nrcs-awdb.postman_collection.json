@@ -1,0 +1,440 @@
+{
+  "item": [
+    {
+      "id": "f50afcba-30cc-4fc1-b5e5-ec33295feb3c",
+      "name": "Stations",
+      "description": {
+        "content": "Monitoring station metadata and discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "34e8cc40-bbfd-47d1-9b4f-4268fd6fe52c",
+          "name": "Get Stations",
+          "request": {
+            "name": "Get Stations",
+            "description": {
+              "content": "Retrieve a list of monitoring stations filtered by state, network type, county, hydrologic unit, or bounding box.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stationIds",
+                  "value": "<string>",
+                  "description": "Comma-separated list of station IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "stateCds",
+                  "value": "<string>",
+                  "description": "Comma-separated two-letter state codes"
+                },
+                {
+                  "disabled": false,
+                  "key": "networkCds",
+                  "value": "<string>",
+                  "description": "Network codes (SNTL=SNOTEL, SCAN=SCAN)"
+                },
+                {
+                  "disabled": false,
+                  "key": "minLatitude",
+                  "value": "<number>",
+                  "description": "Minimum latitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxLatitude",
+                  "value": "<number>",
+                  "description": "Maximum latitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "minLongitude",
+                  "value": "<number>",
+                  "description": "Minimum longitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxLongitude",
+                  "value": "<number>",
+                  "description": "Maximum longitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "minElevation",
+                  "value": "<integer>",
+                  "description": "Minimum elevation in feet"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxElevation",
+                  "value": "<integer>",
+                  "description": "Maximum elevation in feet"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae64e83c-9648-400a-8dce-9942cd0714d3",
+              "name": "List of monitoring stations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stationIds",
+                      "value": "301:ID:SNTL"
+                    },
+                    {
+                      "key": "stateCds",
+                      "value": "ID,MT"
+                    },
+                    {
+                      "key": "networkCds",
+                      "value": "SNTL"
+                    },
+                    {
+                      "key": "minLatitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "maxLatitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "minLongitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "maxLongitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "minElevation",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "maxElevation",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stationId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"networkCode\": \"string\",\n    \"latitude\": 9960.941492784332,\n    \"longitude\": 9331.2124140827,\n    \"elevation\": 7070,\n    \"countyCode\": \"string\",\n    \"huc\": \"string\",\n    \"beginDate\": \"1957-05-22\",\n    \"endDate\": \"1960-09-02\"\n  },\n  {\n    \"stationId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"networkCode\": \"string\",\n    \"latitude\": 6173.243425044592,\n    \"longitude\": 1354.0675983146423,\n    \"elevation\": 5867,\n    \"countyCode\": \"string\",\n    \"huc\": \"string\",\n    \"beginDate\": \"1956-08-24\",\n    \"endDate\": \"1984-08-31\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "684f7a15-823c-412c-9eea-ec0e8a5fe85d",
+      "name": "Data",
+      "description": {
+        "content": "Station data retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "29f38ec6-7889-4bfc-af36-05cee7177474",
+          "name": "Get Station Data",
+          "request": {
+            "name": "Get Station Data",
+            "description": {
+              "content": "Retrieve time-series data for one or more monitoring stations, including snow water equivalent, precipitation, temperature, soil moisture, and other climate variables.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stationIds",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated station IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "elementCds",
+                  "value": "<string>",
+                  "description": "(Required) Element codes to retrieve (WTEQ=Snow Water Equivalent, PREC=Precipitation, TOBS=Air Temperature Observed, SMS=Soil Moisture)"
+                },
+                {
+                  "disabled": false,
+                  "key": "beginDate",
+                  "value": "<date>",
+                  "description": "Start date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "End date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "duration",
+                  "value": "DAILY",
+                  "description": "Data duration/temporal resolution"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "68663a85-ed9d-4aa0-a171-dc652ed1a735",
+              "name": "Station time-series data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stationIds",
+                      "value": "301:ID:SNTL"
+                    },
+                    {
+                      "key": "elementCds",
+                      "value": "WTEQ,PREC,TOBS"
+                    },
+                    {
+                      "key": "beginDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-04-30"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "DAILY"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stationId\": \"string\",\n    \"elementCode\": \"string\",\n    \"elementName\": \"string\",\n    \"storedUnitCode\": \"string\",\n    \"duration\": \"string\",\n    \"values\": [\n      {\n        \"date\": \"2020-08-23\",\n        \"value\": 500.28220210970755,\n        \"qualityControlCode\": \"string\"\n      },\n      {\n        \"date\": \"1960-10-10\",\n        \"value\": 6638.151772841565,\n        \"qualityControlCode\": \"string\"\n      }\n    ]\n  },\n  {\n    \"stationId\": \"string\",\n    \"elementCode\": \"string\",\n    \"elementName\": \"string\",\n    \"storedUnitCode\": \"string\",\n    \"duration\": \"string\",\n    \"values\": [\n      {\n        \"date\": \"1967-10-15\",\n        \"value\": 7084.889677126971,\n        \"qualityControlCode\": \"string\"\n      },\n      {\n        \"date\": \"2015-07-05\",\n        \"value\": 2499.8296761406714,\n        \"qualityControlCode\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6d98824b-9025-4612-a798-8d0c0c97db1a",
+      "name": "Forecasts",
+      "description": {
+        "content": "Water supply forecasts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5a8d63e0-8541-4ee9-bef1-c263daffc120",
+          "name": "Get Water Supply Forecasts",
+          "request": {
+            "name": "Get Water Supply Forecasts",
+            "description": {
+              "content": "Retrieve water supply forecasts for forecast points, including streamflow volume forecasts by probability exceedance levels.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forecasts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stationIds",
+                  "value": "<string>",
+                  "description": "Forecast point station IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "stateCds",
+                  "value": "<string>",
+                  "description": "State codes to filter forecasts"
+                },
+                {
+                  "disabled": false,
+                  "key": "forecastPeriodCds",
+                  "value": "<string>",
+                  "description": "Forecast period codes (e.g. JAN-SEP)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ae22967-de60-4089-8a23-374366033280",
+              "name": "Water supply forecasts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stationIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stateCds",
+                      "value": "ID"
+                    },
+                    {
+                      "key": "forecastPeriodCds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stationId\": \"string\",\n    \"stationName\": \"string\",\n    \"state\": \"string\",\n    \"forecastPeriod\": \"string\",\n    \"issuedDate\": \"1995-12-27\",\n    \"forecastValues\": [\n      {\n        \"exceedanceProbability\": 7308,\n        \"volumeKAF\": 1624.98613230036\n      },\n      {\n        \"exceedanceProbability\": 9354,\n        \"volumeKAF\": 6350.4889693153145\n      }\n    ]\n  },\n  {\n    \"stationId\": \"string\",\n    \"stationName\": \"string\",\n    \"state\": \"string\",\n    \"forecastPeriod\": \"string\",\n    \"issuedDate\": \"1984-06-20\",\n    \"forecastValues\": [\n      {\n        \"exceedanceProbability\": 8905,\n        \"volumeKAF\": 1567.5764382071743\n      },\n      {\n        \"exceedanceProbability\": 3521,\n        \"volumeKAF\": 6316.364881759683\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "71e59eb8-8f29-4506-8528-454649aaae82",
+    "name": "USDA NRCS AWDB Water and Climate REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Natural Resources Conservation Service (NRCS) Air and Water Database (AWDB) REST API provides access to snow, water, and climate monitoring data from SNOTEL (SNOw TELemetry) stations, Soil Climate Analysis Network (SCAN) stations, and other monitoring sites. Supports retrieval of station metadata, current conditions, and historical data for water resource management and forecasting.\n\nContact Support:\n Name: USDA NRCS National Water and Climate Center",
+      "type": "text/plain"
+    }
+  }
+}

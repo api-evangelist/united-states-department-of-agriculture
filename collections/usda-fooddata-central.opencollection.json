@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA FoodData Central API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Foods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Foods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nal.usda.gov/fdc/v1/foods/search",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              },
+              {
+                "name": "query",
+                "value": "cheddar cheese",
+                "type": "query",
+                "description": "Search terms to find foods"
+              },
+              {
+                "name": "dataType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by food data type"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 200)"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort results by"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              }
+            ]
+          },
+          "docs": "Search for foods using keywords and filters. Returns paginated food items matching the query across all food data types."
+        },
+        {
+          "info": {
+            "name": "Get Food By FDC ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nal.usda.gov/fdc/v1/food/:fdcId",
+            "params": [
+              {
+                "name": "fdcId",
+                "value": "454004",
+                "type": "path",
+                "description": "FoodData Central unique food identifier"
+              },
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Nutrient data format to return"
+              },
+              {
+                "name": "nutrients",
+                "value": "",
+                "type": "query",
+                "description": "Filter to specific nutrient IDs (up to 25)"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed nutrient data and food information for a specific food item identified by its FDC ID."
+        },
+        {
+          "info": {
+            "name": "Get Multiple Foods By FDC IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nal.usda.gov/fdc/v1/foods",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              },
+              {
+                "name": "fdcIds",
+                "value": "454004,534358",
+                "type": "query",
+                "description": "Comma-separated list of FDC IDs (max 20)"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Nutrient data format to return"
+              },
+              {
+                "name": "nutrients",
+                "value": "",
+                "type": "query",
+                "description": "Filter to specific nutrient IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve nutrient data for multiple food items by providing a list of FDC IDs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Nutrients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Nutrients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nal.usda.gov/fdc/v1/nutrients",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all nutrients available in FoodData Central with their IDs, names, units, and categories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

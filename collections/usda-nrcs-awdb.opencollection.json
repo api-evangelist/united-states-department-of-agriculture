@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA NRCS AWDB Water and Climate REST API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Stations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1/stations",
+            "params": [
+              {
+                "name": "stationIds",
+                "value": "301:ID:SNTL",
+                "type": "query",
+                "description": "Comma-separated list of station IDs"
+              },
+              {
+                "name": "stateCds",
+                "value": "ID,MT",
+                "type": "query",
+                "description": "Comma-separated two-letter state codes"
+              },
+              {
+                "name": "networkCds",
+                "value": "SNTL",
+                "type": "query",
+                "description": "Network codes (SNTL=SNOTEL, SCAN=SCAN)"
+              },
+              {
+                "name": "minLatitude",
+                "value": "",
+                "type": "query",
+                "description": "Minimum latitude for bounding box"
+              },
+              {
+                "name": "maxLatitude",
+                "value": "",
+                "type": "query",
+                "description": "Maximum latitude for bounding box"
+              },
+              {
+                "name": "minLongitude",
+                "value": "",
+                "type": "query",
+                "description": "Minimum longitude for bounding box"
+              },
+              {
+                "name": "maxLongitude",
+                "value": "",
+                "type": "query",
+                "description": "Maximum longitude for bounding box"
+              },
+              {
+                "name": "minElevation",
+                "value": "",
+                "type": "query",
+                "description": "Minimum elevation in feet"
+              },
+              {
+                "name": "maxElevation",
+                "value": "",
+                "type": "query",
+                "description": "Maximum elevation in feet"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of monitoring stations filtered by state, network type, county, hydrologic unit, or bounding box."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Station Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1/data",
+            "params": [
+              {
+                "name": "stationIds",
+                "value": "301:ID:SNTL",
+                "type": "query",
+                "description": "Comma-separated station IDs"
+              },
+              {
+                "name": "elementCds",
+                "value": "WTEQ,PREC,TOBS",
+                "type": "query",
+                "description": "Element codes to retrieve (WTEQ=Snow Water Equivalent, PREC=Precipitation, TOBS=Air Temperature Observed, SMS=Soil Moisture)"
+              },
+              {
+                "name": "beginDate",
+                "value": "2024-01-01",
+                "type": "query",
+                "description": "Start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "endDate",
+                "value": "2024-04-30",
+                "type": "query",
+                "description": "End date (YYYY-MM-DD)"
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "Data duration/temporal resolution"
+              }
+            ]
+          },
+          "docs": "Retrieve time-series data for one or more monitoring stations, including snow water equivalent, precipitation, temperature, soil moisture, and other climate variables."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Forecasts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Water Supply Forecasts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1/forecasts",
+            "params": [
+              {
+                "name": "stationIds",
+                "value": "",
+                "type": "query",
+                "description": "Forecast point station IDs"
+              },
+              {
+                "name": "stateCds",
+                "value": "ID",
+                "type": "query",
+                "description": "State codes to filter forecasts"
+              },
+              {
+                "name": "forecastPeriodCds",
+                "value": "",
+                "type": "query",
+                "description": "Forecast period codes (e.g. JAN-SEP)"
+              }
+            ]
+          },
+          "docs": "Retrieve water supply forecasts for forecast points, including streamflow volume forecasts by probability exceedance levels."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
