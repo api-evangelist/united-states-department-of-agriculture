@@ -27,7 +27,7 @@ apis:
           https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
         type: SpectralRules
       - url: https://fdc.nal.usda.gov/api-key-signup/
-        type: SignUp
+        type: Signup
     description: >-
       The FoodData Central API provides REST access to FoodData Central (FDC), the USDA's integrated data system that
       provides expanded nutrient profile data and links to related agricultural and experimental research. The API
