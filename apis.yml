@@ -1,6 +1,10 @@
 aid: united-states-department-of-agriculture
 url: https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/apis.yml
 common:
+  - type: DomainSecurity
+    url: security/united-states-department-of-agriculture-domain-security.yml
+  - type: Authentication
+    url: authentication/united-states-department-of-agriculture-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/usda
   - type: LinkedIn

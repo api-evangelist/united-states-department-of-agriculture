@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/usda-ers-arms-openapi.yml, openapi/usda-fooddata-central-openapi.yml, openapi/usda-nass-quickstats-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: api_key
+  sources:
+  - openapi/usda-ers-arms-openapi.yml
+  - openapi/usda-fooddata-central-openapi.yml
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: key
+  sources:
+  - openapi/usda-nass-quickstats-openapi.yml
