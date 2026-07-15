@@ -1,6 +1,8 @@
 aid: united-states-department-of-agriculture
 url: https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/apis.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/united-states-department-of-agriculture-agentic-access.yml
   - type: DomainSecurity
     url: security/united-states-department-of-agriculture-domain-security.yml
   - type: Authentication
