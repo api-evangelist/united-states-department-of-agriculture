@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: USDA ERS ARMS Data Stations API
+  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA Economic Research Service
+    url: https://www.ers.usda.gov/developer/
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.ers.usda.gov/data/arms
+  description: USDA ERS ARMS Data API
+tags:
+- name: Stations
+  description: Monitoring station metadata and discovery
+paths:
+  /stations:
+    get:
+      operationId: getStations
+      summary: Get Stations
+      description: Retrieve a list of monitoring stations filtered by state, network type, county, hydrologic unit, or bounding box.
+      tags:
+      - Stations
+      parameters:
+      - name: stationIds
+        in: query
+        description: Comma-separated list of station IDs
+        required: false
+        schema:
+          type: string
+        example: 301:ID:SNTL
+      - name: stateCds
+        in: query
+        description: Comma-separated two-letter state codes
+        required: false
+        schema:
+          type: string
+        example: ID,MT
+      - name: networkCds
+        in: query
+        description: Network codes (SNTL=SNOTEL, SCAN=SCAN)
+        required: false
+        schema:
+          type: string
+          enum:
+          - SNTL
+          - SCAN
+          - SNOW
+          - USGS
+          - BOR
+        example: SNTL
+      - name: minLatitude
+        in: query
+        description: Minimum latitude for bounding box
+        required: false
+        schema:
+          type: number
+      - name: maxLatitude
+        in: query
+        description: Maximum latitude for bounding box
+        required: false
+        schema:
+          type: number
+      - name: minLongitude
+        in: query
+        description: Minimum longitude for bounding box
+        required: false
+        schema:
+          type: number
+      - name: maxLongitude
+        in: query
+        description: Maximum longitude for bounding box
+        required: false
+        schema:
+          type: number
+      - name: minElevation
+        in: query
+        description: Minimum elevation in feet
+        required: false
+        schema:
+          type: integer
+      - name: maxElevation
+        in: query
+        description: Maximum elevation in feet
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of monitoring stations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Station'
+components:
+  schemas:
+    Station:
+      type: object
+      description: A SNOTEL or SCAN monitoring station
+      properties:
+        stationId:
+          type: string
+          description: Station identifier (e.g. '301:ID:SNTL')
+        name:
+          type: string
+          description: Station name
+        state:
+          type: string
+          description: State code
+        networkCode:
+          type: string
+          description: Network code (SNTL, SCAN, etc.)
+        latitude:
+          type: number
+          description: Station latitude
+        longitude:
+          type: number
+          description: Station longitude
+        elevation:
+          type: integer
+          description: Station elevation in feet
+        countyCode:
+          type: string
+          description: County FIPS code
+        huc:
+          type: string
+          description: Hydrologic Unit Code
+        beginDate:
+          type: string
+          format: date
+          description: Date station data collection began
+        endDate:
+          type: string
+          format: date
+          description: Date station data collection ended (null if active)
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

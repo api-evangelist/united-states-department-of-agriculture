@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: USDA ERS ARMS Data API
+  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA Economic Research Service
+    url: https://www.ers.usda.gov/developer/
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.ers.usda.gov/data/arms
+  description: USDA ERS ARMS Data API
+tags:
+- name: Data
+  description: Station data retrieval
+paths:
+  /data:
+    get:
+      operationId: getStationData
+      summary: Get Station Data
+      description: Retrieve time-series data for one or more monitoring stations, including snow water equivalent, precipitation, temperature, soil moisture, and other climate variables.
+      tags:
+      - Data
+      parameters:
+      - name: stationIds
+        in: query
+        description: Comma-separated station IDs
+        required: true
+        schema:
+          type: string
+        example: 301:ID:SNTL
+      - name: elementCds
+        in: query
+        description: Element codes to retrieve (WTEQ=Snow Water Equivalent, PREC=Precipitation, TOBS=Air Temperature Observed, SMS=Soil Moisture)
+        required: true
+        schema:
+          type: string
+        example: WTEQ,PREC,TOBS
+      - name: beginDate
+        in: query
+        description: Start date (YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2024-01-01'
+      - name: endDate
+        in: query
+        description: End date (YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2024-04-30'
+      - name: duration
+        in: query
+        description: Data duration/temporal resolution
+        required: false
+        schema:
+          type: string
+          enum:
+          - DAILY
+          - MONTHLY
+          - ANNUAL
+          default: DAILY
+      responses:
+        '200':
+          description: Station time-series data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationData'
+components:
+  schemas:
+    StationData:
+      type: object
+      description: Time-series data from a monitoring station
+      properties:
+        stationId:
+          type: string
+          description: Station identifier
+        elementCode:
+          type: string
+          description: Measurement element code
+        elementName:
+          type: string
+          description: Measurement element name
+        storedUnitCode:
+          type: string
+          description: Unit of measurement
+        duration:
+          type: string
+          description: Temporal resolution
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Measurement date
+              value:
+                type: number
+                description: Measured value
+              qualityControlCode:
+                type: string
+                description: Data quality indicator
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

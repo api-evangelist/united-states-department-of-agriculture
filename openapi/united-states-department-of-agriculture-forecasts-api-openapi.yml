@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: USDA ERS ARMS Data Forecasts API
+  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA Economic Research Service
+    url: https://www.ers.usda.gov/developer/
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.ers.usda.gov/data/arms
+  description: USDA ERS ARMS Data API
+tags:
+- name: Forecasts
+  description: Water supply forecasts
+paths:
+  /forecasts:
+    get:
+      operationId: getWaterSupplyForecasts
+      summary: Get Water Supply Forecasts
+      description: Retrieve water supply forecasts for forecast points, including streamflow volume forecasts by probability exceedance levels.
+      tags:
+      - Forecasts
+      parameters:
+      - name: stationIds
+        in: query
+        description: Forecast point station IDs
+        required: false
+        schema:
+          type: string
+      - name: stateCds
+        in: query
+        description: State codes to filter forecasts
+        required: false
+        schema:
+          type: string
+        example: ID
+      - name: forecastPeriodCds
+        in: query
+        description: Forecast period codes (e.g. JAN-SEP)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Water supply forecasts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterForecast'
+components:
+  schemas:
+    WaterForecast:
+      type: object
+      description: Water supply forecast record
+      properties:
+        stationId:
+          type: string
+          description: Forecast point station ID
+        stationName:
+          type: string
+          description: Station name
+        state:
+          type: string
+          description: State code
+        forecastPeriod:
+          type: string
+          description: Forecast period (e.g. JAN-SEP)
+        issuedDate:
+          type: string
+          format: date
+          description: Date forecast was issued
+        forecastValues:
+          type: array
+          items:
+            type: object
+            properties:
+              exceedanceProbability:
+                type: integer
+                description: Exceedance probability percentage (10, 30, 50, 70, 90)
+              volumeKAF:
+                type: number
+                description: Forecast volume in thousand acre-feet
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

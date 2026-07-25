@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: USDA ERS ARMS Data Nutrients API
+  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  version: 1.0.0
+  contact:
+    name: USDA Economic Research Service
+    url: https://www.ers.usda.gov/developer/
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.ers.usda.gov/data/arms
+  description: USDA ERS ARMS Data API
+tags:
+- name: Nutrients
+  description: Nutrient data and lists
+paths:
+  /nutrients:
+    get:
+      operationId: getNutrients
+      summary: Get All Nutrients
+      description: Retrieve a list of all nutrients available in FoodData Central with their IDs, names, units, and categories.
+      tags:
+      - Nutrients
+      parameters:
+      - name: api_key
+        in: query
+        description: API key from api.data.gov
+        required: true
+        schema:
+          type: string
+        example: DEMO_KEY
+      responses:
+        '200':
+          description: List of all available nutrients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Nutrient'
+components:
+  schemas:
+    Nutrient:
+      type: object
+      description: A nutrient tracked in FoodData Central
+      properties:
+        id:
+          type: integer
+          description: Unique nutrient identifier
+        number:
+          type: string
+          description: USDA nutrient number
+        name:
+          type: string
+          description: Nutrient name
+        rank:
+          type: integer
+          description: Display rank
+        unitName:
+          type: string
+          description: Unit of measure
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
