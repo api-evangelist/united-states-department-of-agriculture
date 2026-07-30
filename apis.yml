@@ -12,100 +12,253 @@ common:
   - type: LinkedIn
     url: https://www.linkedin.com/company/usda
 apis:
-  - aid: united-states-department-of-agriculture:usda-fooddata-central-api
-    name: USDA FoodData Central API
-    tags:
-      - Food
-      - Nutrition
-      - Agriculture
-      - Federal Government
-    humanURL: https://fdc.nal.usda.gov/api-guide/
-    baseURL: https://api.nal.usda.gov/fdc/v1
-    properties:
-      - url: https://fdc.nal.usda.gov/api-guide/
-        type: Documentation
-      - url: https://api.nal.usda.gov/fdc/v1/yaml-spec?api_key=DEMO_KEY
-        type: OpenAPI
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/openapi/usda-fooddata-central-openapi.yml
-        type: OpenAPI
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
-        type: SpectralRules
-      - url: https://fdc.nal.usda.gov/api-key-signup/
-        type: Signup
-    description: >-
-      The FoodData Central API provides REST access to FoodData Central (FDC), the USDA's integrated data system that
-      provides expanded nutrient profile data and links to related agricultural and experimental research. The API
-      supports food search, nutrient lookup, and retrieval of food details across multiple food data types including
-      Foundation Foods, SR Legacy, FNDDS, Branded Foods, and Experimental Foods.
-  - aid: united-states-department-of-agriculture:usda-nass-quickstats-api
-    name: USDA NASS Quick Stats API
-    tags:
-      - Agriculture
-      - Statistics
-      - Crops
-      - Livestock
-      - Federal Government
-    humanURL: https://quickstats.nass.usda.gov/api
-    baseURL: https://quickstats.nass.usda.gov/api
-    properties:
-      - url: https://quickstats.nass.usda.gov/api
-        type: Documentation
-      - url: https://www.nass.usda.gov/developer/index.php
-        type: Portal
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/openapi/usda-nass-quickstats-openapi.yml
-        type: OpenAPI
-    description: >-
-      The USDA NASS Quick Stats API provides direct access to the National Agricultural Statistics Service's official
-      published aggregate estimates related to U.S. agricultural production. Returns data for commodities, categories,
-      and geographic areas, supporting queries on crops, livestock, economics, and demographics with responses in JSON,
-      CSV, or XML formats.
-  - aid: united-states-department-of-agriculture:usda-ers-arms-api
-    name: USDA ERS ARMS Data API
-    tags:
-      - Agriculture
-      - Economics
-      - Farm Management
-      - Federal Government
-    humanURL: https://www.ers.usda.gov/developer/data-apis/arms-data-api
-    baseURL: https://api.ers.usda.gov/data/arms
-    properties:
-      - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
-        type: Documentation
-      - url: https://www.ers.usda.gov/developer/data-apis/
-        type: Portal
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/openapi/usda-ers-arms-openapi.yml
-        type: OpenAPI
-    description: >-
-      The USDA Economic Research Service (ERS) ARMS Data API provides access to the Agricultural Resource Management
-      Survey (ARMS), covering farm finances, production practices, and resource use for U.S. farms. Supports attribute-
-      based querying of farm income, balance sheet, costs, and production data by year, state, and report type.
-  - aid: united-states-department-of-agriculture:usda-nrcs-awdb-api
-    name: USDA NRCS AWDB Water and Climate REST API
-    tags:
-      - Water
-      - Climate
-      - Snow
-      - SNOTEL
-      - Federal Government
-    humanURL: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
-    baseURL: https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1
-    properties:
-      - url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
-        type: SwaggerUI
-      - url: https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
-        type: Documentation
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/openapi/usda-nrcs-awdb-openapi.yml
-        type: OpenAPI
-    description: >-
-      The USDA Natural Resources Conservation Service (NRCS) Air and Water Database (AWDB) REST API provides access to
-      snow, water, and climate data from SNOTEL (SNOw TELemetry) stations and Soil Climate Analysis Network (SCAN)
-      stations. Supports retrieval of daily, monthly, and annual hydrology and climate data for water resource
-      management.
+- aid: united-states-department-of-agriculture:united-states-department-of-agriculture-data-api
+  name: United States Department of Agriculture Data API
+  description: Station data retrieval
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Data
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-data-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-foods-api
+  name: United States Department of Agriculture Foods API
+  description: Food search and retrieval operations
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Foods
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-foods-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-forecasts-api
+  name: United States Department of Agriculture Forecasts API
+  description: Water supply forecasts
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Forecasts
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-forecasts-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-metadata-api
+  name: United States Department of Agriculture Metadata API
+  description: Available years, states, reports, and variables
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-nutrients-api
+  name: United States Department of Agriculture Nutrients API
+  description: Nutrient data and lists
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Nutrients
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-nutrients-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-stations-api
+  name: United States Department of Agriculture Stations API
+  description: Monitoring station metadata and discovery
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Stations
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-stations-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-statistics-api
+  name: United States Department of Agriculture Statistics API
+  description: Agricultural statistics query and retrieval
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
+- aid: >-
+    united-states-department-of-agriculture:united-states-department-of-agriculture-survey-data-api
+  name: United States Department of Agriculture Survey Data API
+  description: Farm survey data retrieval
+  humanURL: https://fdc.nal.usda.gov/api-guide/
+  baseURL: https://api.nal.usda.gov/fdc/v1
+  tags:
+  - Survey Data
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-department-of-agriculture-survey-data-api-openapi.yml
+  - type: Documentation
+    url: https://fdc.nal.usda.gov/api-guide/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-department-of-agriculture/refs/heads/main/rules/usda-fooddata-central-rules.yml
+  - type: Signup
+    url: https://fdc.nal.usda.gov/api-key-signup/
+  - type: Documentation
+    url: https://quickstats.nass.usda.gov/api
+  - type: Portal
+    url: https://www.nass.usda.gov/developer/index.php
+  - type: Documentation
+    url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - type: Portal
+    url: https://www.ers.usda.gov/developer/data-apis/
+  - type: SwaggerUI
+    url: https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
+  - type: Documentation
+    url: >-
+      https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf
 name: United States Department of Agriculture
 tags:
   - Federal Government
@@ -115,7 +268,20 @@ tags:
   - Rural Development
   - Climate
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/united-states-department-of-agriculture.png
 access: 3rd-Party
 created: '2024-11-14'
 modified: '2026-05-19'
