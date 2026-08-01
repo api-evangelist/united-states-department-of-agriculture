@@ -1,0 +1,28 @@
+{
+  "provider": "united-states-department-of-agriculture",
+  "sources": [
+    "united-states-department-of-agriculture-data-api-openapi.yml",
+    "united-states-department-of-agriculture-foods-api-openapi.yml",
+    "united-states-department-of-agriculture-forecasts-api-openapi.yml",
+    "united-states-department-of-agriculture-metadata-api-openapi.yml",
+    "united-states-department-of-agriculture-nutrients-api-openapi.yml",
+    "united-states-department-of-agriculture-stations-api-openapi.yml",
+    "united-states-department-of-agriculture-statistics-api-openapi.yml",
+    "united-states-department-of-agriculture-survey-data-api-openapi.yml"
+  ],
+  "outputs": [
+    "united-states-department-of-agriculture-data-api-openapi.yml",
+    "united-states-department-of-agriculture-foods-api-openapi.yml",
+    "united-states-department-of-agriculture-forecasts-api-openapi.yml",
+    "united-states-department-of-agriculture-metadata-api-openapi.yml",
+    "united-states-department-of-agriculture-nutrients-api-openapi.yml",
+    "united-states-department-of-agriculture-stations-api-openapi.yml",
+    "united-states-department-of-agriculture-statistics-api-openapi.yml",
+    "united-states-department-of-agriculture-survey-data-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
