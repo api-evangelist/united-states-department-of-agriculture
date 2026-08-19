@@ -1,0 +1,154 @@
+{
+  "item": [
+    {
+      "id": "b0d03f16-3f14-4555-a16e-02c2108b1a54",
+      "name": "Survey Data",
+      "description": {
+        "content": "Farm survey data retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c878882d-215e-407f-9481-504a963feb6d",
+          "name": "Get ARMS Survey Data",
+          "request": {
+            "name": "Get ARMS Survey Data",
+            "description": {
+              "content": "Retrieve ARMS farm survey data by year, state, report, and variable. Year is required; at least one of report or variable is also required. Supports GET and POST methods.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "surveydata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key from api.data.gov"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "(Required) Survey year (required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "report",
+                  "value": "<string>",
+                  "description": "Report name to retrieve data for"
+                },
+                {
+                  "disabled": false,
+                  "key": "variable",
+                  "value": "<string>",
+                  "description": "Specific variable code(s) to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Two-letter state abbreviation or NATIONAL"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "47332cf9-c290-4e4c-8a46-7d7762849ef5",
+              "name": "ARMS farm survey data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "surveydata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "DEMO_KEY"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    },
+                    {
+                      "key": "report",
+                      "value": "farm_income"
+                    },
+                    {
+                      "key": "variable",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "IA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"year\": 3449,\n      \"state\": \"string\",\n      \"stateName\": \"string\",\n      \"report\": \"string\",\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"estimate\": 5181.693973176611,\n      \"se\": 75.33191470752931,\n      \"rse\": 5202.16994331626,\n      \"units\": \"string\",\n      \"farmType\": \"string\"\n    },\n    {\n      \"year\": 7455,\n      \"state\": \"string\",\n      \"stateName\": \"string\",\n      \"report\": \"string\",\n      \"variable\": \"string\",\n      \"variableLabel\": \"string\",\n      \"estimate\": 2957.126970456747,\n      \"se\": 8558.449651190256,\n      \"rse\": 9838.51899355315,\n      \"units\": \"string\",\n      \"farmType\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ers.usda.gov/data/arms",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c432944a-ad75-4a2b-9bbf-78c819e47d74",
+    "name": "USDA ERS ARMS Data Survey Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.\n\nContact Support:\n Name: USDA Economic Research Service",
+      "type": "text/plain"
+    }
+  }
+}

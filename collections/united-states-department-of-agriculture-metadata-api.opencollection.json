@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA ERS ARMS Data Metadata API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Available Survey Years",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/year",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              }
+            ]
+          },
+          "docs": "Retrieve all years for which ARMS survey data is available."
+        },
+        {
+          "info": {
+            "name": "Get Available States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/state",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              }
+            ]
+          },
+          "docs": "Retrieve all states and associated metadata and variables available for ARMS survey data."
+        },
+        {
+          "info": {
+            "name": "Get Available Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/report",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              }
+            ]
+          },
+          "docs": "Retrieve available ARMS reports with their metadata and variables. Reports represent different survey focus areas such as farm income, balance sheet, and production costs."
+        },
+        {
+          "info": {
+            "name": "Get Available Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/variable",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              },
+              {
+                "name": "report",
+                "value": "",
+                "type": "query",
+                "description": "Filter variables by report name"
+              }
+            ]
+          },
+          "docs": "Retrieve all ARMS variables with their information and metadata, including variable codes, descriptions, and units."
+        },
+        {
+          "info": {
+            "name": "Get Valid Parameter Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/get_param_values/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "NASS API key"
+              },
+              {
+                "name": "param",
+                "value": "",
+                "type": "query",
+                "description": "Parameter name to retrieve values for"
+              }
+            ]
+          },
+          "docs": "Retrieve all valid values for a specified Quick Stats parameter. Useful for building queries and understanding available data dimensions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

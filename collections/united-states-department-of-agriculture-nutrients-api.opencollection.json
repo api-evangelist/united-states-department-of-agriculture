@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA ERS ARMS Data Nutrients API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Nutrients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Nutrients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/nutrients",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "DEMO_KEY",
+                "type": "query",
+                "description": "API key from api.data.gov"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all nutrients available in FoodData Central with their IDs, names, units, and categories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

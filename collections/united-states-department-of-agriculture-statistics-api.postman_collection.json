@@ -1,0 +1,504 @@
+{
+  "item": [
+    {
+      "id": "09c34bec-b7d2-43b4-b388-f8ef7e60e535",
+      "name": "Statistics",
+      "description": {
+        "content": "Agricultural statistics query and retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89a746a3-12e5-4cae-82f8-3184261a168a",
+          "name": "Get Agricultural Statistics",
+          "request": {
+            "name": "Get Agricultural Statistics",
+            "description": {
+              "content": "Query NASS agricultural statistics data using WHAT (commodity, category), WHERE (state, county, watershed), and WHEN (year, period) parameters. Returns a maximum of 50,000 records per request. Supports JSON, CSV, and XML response formats.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api_GET",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) NASS API key from quickstats.nass.usda.gov"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "JSON",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "commodity_desc",
+                  "value": "<string>",
+                  "description": "Commodity description (e.g. CORN, WHEAT, CATTLE)"
+                },
+                {
+                  "disabled": false,
+                  "key": "statisticcat_desc",
+                  "value": "<string>",
+                  "description": "Statistics category (e.g. AREA HARVESTED, PRODUCTION, PRICE RECEIVED)"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<string>",
+                  "description": "Four digit year or range using __GE or __LE operators"
+                },
+                {
+                  "disabled": false,
+                  "key": "state_name",
+                  "value": "<string>",
+                  "description": "Full state name"
+                },
+                {
+                  "disabled": false,
+                  "key": "agg_level_desc",
+                  "value": "<string>",
+                  "description": "Geographic aggregation level"
+                },
+                {
+                  "disabled": false,
+                  "key": "freq_desc",
+                  "value": "<string>",
+                  "description": "Frequency period descriptor"
+                },
+                {
+                  "disabled": false,
+                  "key": "reference_period_desc",
+                  "value": "<string>",
+                  "description": "Reference period (e.g. YEAR, JAN, FEB, MARKETING YEAR)"
+                },
+                {
+                  "disabled": false,
+                  "key": "unit_desc",
+                  "value": "<string>",
+                  "description": "Unit of measure (e.g. ACRES, BU, HEAD, $)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sector_desc",
+                  "value": "<string>",
+                  "description": "Economic sector (CROPS, ANIMALS & PRODUCTS, ECONOMICS, etc.)"
+                },
+                {
+                  "disabled": false,
+                  "key": "group_desc",
+                  "value": "<string>",
+                  "description": "Commodity group within sector"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54e18a9b-bf06-4402-ba47-4e49ff35203b",
+              "name": "Agricultural statistics data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api_GET",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "JSON"
+                    },
+                    {
+                      "key": "commodity_desc",
+                      "value": "CORN"
+                    },
+                    {
+                      "key": "statisticcat_desc",
+                      "value": "PRODUCTION"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "state_name",
+                      "value": "IOWA"
+                    },
+                    {
+                      "key": "agg_level_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "freq_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_period_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unit_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group_desc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"source_desc\": \"string\",\n      \"sector_desc\": \"string\",\n      \"group_desc\": \"string\",\n      \"commodity_desc\": \"string\",\n      \"class_desc\": \"string\",\n      \"prodn_practice_desc\": \"string\",\n      \"util_practice_desc\": \"string\",\n      \"statisticcat_desc\": \"string\",\n      \"unit_desc\": \"string\",\n      \"short_desc\": \"string\",\n      \"domain_desc\": \"string\",\n      \"domaincat_desc\": \"string\",\n      \"agg_level_desc\": \"string\",\n      \"state_ansi\": \"string\",\n      \"state_fips_code\": \"string\",\n      \"state_alpha\": \"string\",\n      \"state_name\": \"string\",\n      \"asd_code\": \"string\",\n      \"asd_desc\": \"string\",\n      \"county_ansi\": \"string\",\n      \"county_code\": \"string\",\n      \"county_name\": \"string\",\n      \"region_desc\": \"string\",\n      \"zip_5\": \"string\",\n      \"watershed_code\": \"string\",\n      \"watershed_desc\": \"string\",\n      \"congr_district_code\": \"string\",\n      \"country_code\": \"string\",\n      \"country_name\": \"string\",\n      \"location_desc\": \"string\",\n      \"year\": 6623,\n      \"freq_desc\": \"string\",\n      \"begin_code\": \"string\",\n      \"end_code\": \"string\",\n      \"reference_period_desc\": \"string\",\n      \"week_ending\": \"string\",\n      \"load_time\": \"string\",\n      \"Value\": \"string\",\n      \"CV (%)\": \"string\"\n    },\n    {\n      \"source_desc\": \"string\",\n      \"sector_desc\": \"string\",\n      \"group_desc\": \"string\",\n      \"commodity_desc\": \"string\",\n      \"class_desc\": \"string\",\n      \"prodn_practice_desc\": \"string\",\n      \"util_practice_desc\": \"string\",\n      \"statisticcat_desc\": \"string\",\n      \"unit_desc\": \"string\",\n      \"short_desc\": \"string\",\n      \"domain_desc\": \"string\",\n      \"domaincat_desc\": \"string\",\n      \"agg_level_desc\": \"string\",\n      \"state_ansi\": \"string\",\n      \"state_fips_code\": \"string\",\n      \"state_alpha\": \"string\",\n      \"state_name\": \"string\",\n      \"asd_code\": \"string\",\n      \"asd_desc\": \"string\",\n      \"county_ansi\": \"string\",\n      \"county_code\": \"string\",\n      \"county_name\": \"string\",\n      \"region_desc\": \"string\",\n      \"zip_5\": \"string\",\n      \"watershed_code\": \"string\",\n      \"watershed_desc\": \"string\",\n      \"congr_district_code\": \"string\",\n      \"country_code\": \"string\",\n      \"country_name\": \"string\",\n      \"location_desc\": \"string\",\n      \"year\": 1737,\n      \"freq_desc\": \"string\",\n      \"begin_code\": \"string\",\n      \"end_code\": \"string\",\n      \"reference_period_desc\": \"string\",\n      \"week_ending\": \"string\",\n      \"load_time\": \"string\",\n      \"Value\": \"string\",\n      \"CV (%)\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94b0705c-2c66-46fa-b418-ac33081f14a2",
+              "name": "Request resulted in more than 50,000 records or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api_GET",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "JSON"
+                    },
+                    {
+                      "key": "commodity_desc",
+                      "value": "CORN"
+                    },
+                    {
+                      "key": "statisticcat_desc",
+                      "value": "PRODUCTION"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "state_name",
+                      "value": "IOWA"
+                    },
+                    {
+                      "key": "agg_level_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "freq_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_period_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unit_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group_desc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b2977e82-e91b-4ff2-bcb5-6a95b112b456",
+              "name": "Invalid or expired API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api_GET",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "JSON"
+                    },
+                    {
+                      "key": "commodity_desc",
+                      "value": "CORN"
+                    },
+                    {
+                      "key": "statisticcat_desc",
+                      "value": "PRODUCTION"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "state_name",
+                      "value": "IOWA"
+                    },
+                    {
+                      "key": "agg_level_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "freq_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_period_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unit_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group_desc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9342133a-c9ae-4a26-af04-79ae018681ca",
+          "name": "Get Record Count",
+          "request": {
+            "name": "Get Record Count",
+            "description": {
+              "content": "Get the number of records matching a set of query parameters without retrieving the full dataset. Useful for verifying queries stay under the 50,000 record limit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "get_counts",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) NASS API key"
+                },
+                {
+                  "disabled": false,
+                  "key": "commodity_desc",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "agg_level_desc",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96d47b2b-1dd4-446b-882e-3ac277a3a9d3",
+              "name": "Record count for the query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "get_counts",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commodity_desc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "year",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "agg_level_desc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ers.usda.gov/data/arms",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "172421eb-b809-43e8-a8ec-a68a810c730b",
+    "name": "USDA ERS ARMS Data Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.\n\nContact Support:\n Name: USDA Economic Research Service",
+      "type": "text/plain"
+    }
+  }
+}

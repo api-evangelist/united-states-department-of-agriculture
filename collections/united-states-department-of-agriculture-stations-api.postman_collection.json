@@ -1,0 +1,194 @@
+{
+  "item": [
+    {
+      "id": "c0d8bc25-fe42-49d9-9693-be1ceaf1f5da",
+      "name": "Stations",
+      "description": {
+        "content": "Monitoring station metadata and discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88fa9ff3-ffb2-45c5-9a6f-644f957fa39d",
+          "name": "Get Stations",
+          "request": {
+            "name": "Get Stations",
+            "description": {
+              "content": "Retrieve a list of monitoring stations filtered by state, network type, county, hydrologic unit, or bounding box.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stationIds",
+                  "value": "<string>",
+                  "description": "Comma-separated list of station IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "stateCds",
+                  "value": "<string>",
+                  "description": "Comma-separated two-letter state codes"
+                },
+                {
+                  "disabled": false,
+                  "key": "networkCds",
+                  "value": "<string>",
+                  "description": "Network codes (SNTL=SNOTEL, SCAN=SCAN)"
+                },
+                {
+                  "disabled": false,
+                  "key": "minLatitude",
+                  "value": "<number>",
+                  "description": "Minimum latitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxLatitude",
+                  "value": "<number>",
+                  "description": "Maximum latitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "minLongitude",
+                  "value": "<number>",
+                  "description": "Minimum longitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxLongitude",
+                  "value": "<number>",
+                  "description": "Maximum longitude for bounding box"
+                },
+                {
+                  "disabled": false,
+                  "key": "minElevation",
+                  "value": "<integer>",
+                  "description": "Minimum elevation in feet"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxElevation",
+                  "value": "<integer>",
+                  "description": "Maximum elevation in feet"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8bb6b35a-90b1-424e-83e7-1e1d43ee13f1",
+              "name": "List of monitoring stations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stationIds",
+                      "value": "301:ID:SNTL"
+                    },
+                    {
+                      "key": "stateCds",
+                      "value": "ID,MT"
+                    },
+                    {
+                      "key": "networkCds",
+                      "value": "SNTL"
+                    },
+                    {
+                      "key": "minLatitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "maxLatitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "minLongitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "maxLongitude",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "minElevation",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "maxElevation",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stationId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"networkCode\": \"string\",\n    \"latitude\": 534.8436573921445,\n    \"longitude\": 8581.689100937703,\n    \"elevation\": 8888,\n    \"countyCode\": \"string\",\n    \"huc\": \"string\",\n    \"beginDate\": \"1949-01-05\",\n    \"endDate\": \"2011-03-03\"\n  },\n  {\n    \"stationId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"networkCode\": \"string\",\n    \"latitude\": 2836.8731720953933,\n    \"longitude\": 159.98282592985856,\n    \"elevation\": 985,\n    \"countyCode\": \"string\",\n    \"huc\": \"string\",\n    \"beginDate\": \"1976-02-28\",\n    \"endDate\": \"1961-09-01\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ers.usda.gov/data/arms",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7b110727-a13d-4c31-baf2-38586a5b30c9",
+    "name": "USDA ERS ARMS Data Stations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.\n\nContact Support:\n Name: USDA Economic Research Service",
+      "type": "text/plain"
+    }
+  }
+}

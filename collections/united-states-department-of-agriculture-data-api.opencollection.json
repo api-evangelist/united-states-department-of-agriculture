@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA ERS ARMS Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Station Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/data",
+            "params": [
+              {
+                "name": "stationIds",
+                "value": "301:ID:SNTL",
+                "type": "query",
+                "description": "Comma-separated station IDs"
+              },
+              {
+                "name": "elementCds",
+                "value": "WTEQ,PREC,TOBS",
+                "type": "query",
+                "description": "Element codes to retrieve (WTEQ=Snow Water Equivalent, PREC=Precipitation, TOBS=Air Temperature Observed, SMS=Soil Moisture)"
+              },
+              {
+                "name": "beginDate",
+                "value": "2024-01-01",
+                "type": "query",
+                "description": "Start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "endDate",
+                "value": "2024-04-30",
+                "type": "query",
+                "description": "End date (YYYY-MM-DD)"
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "Data duration/temporal resolution"
+              }
+            ]
+          },
+          "docs": "Retrieve time-series data for one or more monitoring stations, including snow water equivalent, precipitation, temperature, soil moisture, and other climate variables."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

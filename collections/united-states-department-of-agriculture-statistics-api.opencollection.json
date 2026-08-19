@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USDA ERS ARMS Data Statistics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Agricultural Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/api_GET/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "NASS API key from quickstats.nass.usda.gov"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "commodity_desc",
+                "value": "CORN",
+                "type": "query",
+                "description": "Commodity description (e.g. CORN, WHEAT, CATTLE)"
+              },
+              {
+                "name": "statisticcat_desc",
+                "value": "PRODUCTION",
+                "type": "query",
+                "description": "Statistics category (e.g. AREA HARVESTED, PRODUCTION, PRICE RECEIVED)"
+              },
+              {
+                "name": "year",
+                "value": "2023",
+                "type": "query",
+                "description": "Four digit year or range using __GE or __LE operators"
+              },
+              {
+                "name": "state_name",
+                "value": "IOWA",
+                "type": "query",
+                "description": "Full state name"
+              },
+              {
+                "name": "agg_level_desc",
+                "value": "",
+                "type": "query",
+                "description": "Geographic aggregation level"
+              },
+              {
+                "name": "freq_desc",
+                "value": "",
+                "type": "query",
+                "description": "Frequency period descriptor"
+              },
+              {
+                "name": "reference_period_desc",
+                "value": "",
+                "type": "query",
+                "description": "Reference period (e.g. YEAR, JAN, FEB, MARKETING YEAR)"
+              },
+              {
+                "name": "unit_desc",
+                "value": "",
+                "type": "query",
+                "description": "Unit of measure (e.g. ACRES, BU, HEAD, $)"
+              },
+              {
+                "name": "sector_desc",
+                "value": "",
+                "type": "query",
+                "description": "Economic sector (CROPS, ANIMALS & PRODUCTS, ECONOMICS, etc.)"
+              },
+              {
+                "name": "group_desc",
+                "value": "",
+                "type": "query",
+                "description": "Commodity group within sector"
+              }
+            ]
+          },
+          "docs": "Query NASS agricultural statistics data using WHAT (commodity, category), WHERE (state, county, watershed), and WHEN (year, period) parameters. Returns a maximum of 50,000 records per request. Supports JSON, CSV, and XML response formats."
+        },
+        {
+          "info": {
+            "name": "Get Record Count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ers.usda.gov/data/arms/get_counts/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "NASS API key"
+              },
+              {
+                "name": "commodity_desc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "agg_level_desc",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the number of records matching a set of query parameters without retrieving the full dataset. Useful for verifying queries stay under the 50,000 record limit."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

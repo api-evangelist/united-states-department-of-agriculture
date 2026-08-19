@@ -1,0 +1,154 @@
+{
+  "item": [
+    {
+      "id": "779845ad-020c-4943-8b20-28b06248af46",
+      "name": "Data",
+      "description": {
+        "content": "Station data retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "790dc508-5fc6-421a-8e62-fe7abbf23f1b",
+          "name": "Get Station Data",
+          "request": {
+            "name": "Get Station Data",
+            "description": {
+              "content": "Retrieve time-series data for one or more monitoring stations, including snow water equivalent, precipitation, temperature, soil moisture, and other climate variables.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stationIds",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated station IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "elementCds",
+                  "value": "<string>",
+                  "description": "(Required) Element codes to retrieve (WTEQ=Snow Water Equivalent, PREC=Precipitation, TOBS=Air Temperature Observed, SMS=Soil Moisture)"
+                },
+                {
+                  "disabled": false,
+                  "key": "beginDate",
+                  "value": "<date>",
+                  "description": "Start date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "End date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "duration",
+                  "value": "DAILY",
+                  "description": "Data duration/temporal resolution"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0294d427-4257-4ec3-87b2-56a69296f3ed",
+              "name": "Station time-series data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stationIds",
+                      "value": "301:ID:SNTL"
+                    },
+                    {
+                      "key": "elementCds",
+                      "value": "WTEQ,PREC,TOBS"
+                    },
+                    {
+                      "key": "beginDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-04-30"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "DAILY"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stationId\": \"string\",\n    \"elementCode\": \"string\",\n    \"elementName\": \"string\",\n    \"storedUnitCode\": \"string\",\n    \"duration\": \"string\",\n    \"values\": [\n      {\n        \"date\": \"2012-07-01\",\n        \"value\": 5829.221122112165,\n        \"qualityControlCode\": \"string\"\n      },\n      {\n        \"date\": \"1981-05-25\",\n        \"value\": 8146.214805938026,\n        \"qualityControlCode\": \"string\"\n      }\n    ]\n  },\n  {\n    \"stationId\": \"string\",\n    \"elementCode\": \"string\",\n    \"elementName\": \"string\",\n    \"storedUnitCode\": \"string\",\n    \"duration\": \"string\",\n    \"values\": [\n      {\n        \"date\": \"1996-08-29\",\n        \"value\": 3515.6684879241907,\n        \"qualityControlCode\": \"string\"\n      },\n      {\n        \"date\": \"1963-03-27\",\n        \"value\": 3339.3436623179805,\n        \"qualityControlCode\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ers.usda.gov/data/arms",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "da3c4d06-408a-406d-849b-08044238a24f",
+    "name": "USDA ERS ARMS Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.\n\nContact Support:\n Name: USDA Economic Research Service",
+      "type": "text/plain"
+    }
+  }
+}
