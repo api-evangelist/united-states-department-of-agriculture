@@ -1,28 +1,40 @@
 {
   "provider": "united-states-department-of-agriculture",
   "sources": [
-    "united-states-department-of-agriculture-data-api-openapi.yml",
-    "united-states-department-of-agriculture-foods-api-openapi.yml",
-    "united-states-department-of-agriculture-forecasts-api-openapi.yml",
-    "united-states-department-of-agriculture-metadata-api-openapi.yml",
-    "united-states-department-of-agriculture-nutrients-api-openapi.yml",
-    "united-states-department-of-agriculture-stations-api-openapi.yml",
-    "united-states-department-of-agriculture-statistics-api-openapi.yml",
-    "united-states-department-of-agriculture-survey-data-api-openapi.yml"
+    "_original/usda-ers-arms-openapi.yml",
+    "_original/usda-fooddata-central-openapi.yml",
+    "_original/usda-nass-quickstats-openapi.yml",
+    "_original/usda-nrcs-awdb-openapi.yml"
   ],
   "outputs": [
-    "united-states-department-of-agriculture-data-api-openapi.yml",
-    "united-states-department-of-agriculture-foods-api-openapi.yml",
-    "united-states-department-of-agriculture-forecasts-api-openapi.yml",
     "united-states-department-of-agriculture-metadata-api-openapi.yml",
+    "united-states-department-of-agriculture-survey-data-api-openapi.yml",
+    "united-states-department-of-agriculture-foods-api-openapi.yml",
     "united-states-department-of-agriculture-nutrients-api-openapi.yml",
-    "united-states-department-of-agriculture-stations-api-openapi.yml",
     "united-states-department-of-agriculture-statistics-api-openapi.yml",
-    "united-states-department-of-agriculture-survey-data-api-openapi.yml"
+    "united-states-department-of-agriculture-data-api-openapi.yml",
+    "united-states-department-of-agriculture-forecasts-api-openapi.yml",
+    "united-states-department-of-agriculture-stations-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "usda-ers-arms-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "usda-fooddata-central-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "usda-nass-quickstats-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "usda-nrcs-awdb-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Metadata' spans 2 source specs (usda-ers-arms-openapi.yml, usda-nass-quickstats-openapi.yml): per-path servers applied"
+  ],
+  "skipped": [
+    "united-states-department-of-agriculture-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-foods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-forecasts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-nutrients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-stations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "united-states-department-of-agriculture-survey-data-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

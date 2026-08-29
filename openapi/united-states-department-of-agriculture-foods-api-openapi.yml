@@ -1,17 +1,18 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: USDA ERS ARMS Data Foods API
-  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  title: USDA FoodData Central Foods API
+  description: The FoodData Central API provides REST access to FoodData Central (FDC), the USDA's integrated data system providing expanded nutrient profile data linked to agricultural and experimental research. Covers Foundation Foods, SR Legacy, FNDDS, Branded Foods, and Experimental Foods. An API key from api.data.gov is required.
   version: 1.0.0
   contact:
-    name: USDA Economic Research Service
-    url: https://www.ers.usda.gov/developer/
+    name: USDA FoodData Central
+    url: https://fdc.nal.usda.gov/
+    email: FSISWebmaster@usda.gov
   license:
     name: Public Domain
     url: https://www.usa.gov/government-works
 servers:
-- url: https://api.ers.usda.gov/data/arms
-  description: USDA ERS ARMS Data API
+- url: https://api.nal.usda.gov/fdc/v1
+  description: USDA FoodData Central API
 tags:
 - name: Foods
   description: Food search and retrieval operations
@@ -208,6 +209,28 @@ paths:
                   $ref: '#/components/schemas/FoodItem'
 components:
   schemas:
+    SearchResult:
+      type: object
+      description: Paginated food search results
+      properties:
+        totalHits:
+          type: integer
+          description: Total number of matching foods
+        currentPage:
+          type: integer
+          description: Current page number
+        totalPages:
+          type: integer
+          description: Total number of pages
+        pageList:
+          type: array
+          items:
+            type: integer
+          description: List of page numbers
+        foods:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultFood'
     SearchResultFood:
       type: object
       description: Food item from search results
@@ -234,50 +257,6 @@ components:
         score:
           type: number
           description: Search relevance score
-    FoodNutrient:
-      type: object
-      description: Nutrient value for a food item
-      properties:
-        nutrientId:
-          type: integer
-          description: Nutrient identifier
-        nutrientName:
-          type: string
-          description: Name of the nutrient
-        nutrientNumber:
-          type: string
-          description: USDA nutrient number
-        unitName:
-          type: string
-          description: Unit of measure (g, mg, kcal, etc.)
-        value:
-          type: number
-          description: Amount of nutrient per 100g of food
-        derivationCode:
-          type: string
-          description: Method used to derive the nutrient value
-    SearchResult:
-      type: object
-      description: Paginated food search results
-      properties:
-        totalHits:
-          type: integer
-          description: Total number of matching foods
-        currentPage:
-          type: integer
-          description: Current page number
-        totalPages:
-          type: integer
-          description: Total number of pages
-        pageList:
-          type: array
-          items:
-            type: integer
-          description: List of page numbers
-        foods:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchResultFood'
     FoodItem:
       type: object
       description: Detailed food item with nutrient data
@@ -313,8 +292,31 @@ components:
         labelNutrients:
           type: object
           description: Nutrition facts label data (branded foods)
+    FoodNutrient:
+      type: object
+      description: Nutrient value for a food item
+      properties:
+        nutrientId:
+          type: integer
+          description: Nutrient identifier
+        nutrientName:
+          type: string
+          description: Name of the nutrient
+        nutrientNumber:
+          type: string
+          description: USDA nutrient number
+        unitName:
+          type: string
+          description: Unit of measure (g, mg, kcal, etc.)
+        value:
+          type: number
+          description: Amount of nutrient per 100g of food
+        derivationCode:
+          type: string
+          description: Method used to derive the nutrient value
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: query
       name: api_key
+      description: API key from https://api.data.gov/signup/

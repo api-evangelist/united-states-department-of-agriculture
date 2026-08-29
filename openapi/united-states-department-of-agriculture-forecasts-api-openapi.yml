@@ -1,17 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: USDA ERS ARMS Data Forecasts API
-  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  title: USDA NRCS AWDB Water and Climate REST Forecasts API
+  description: The USDA Natural Resources Conservation Service (NRCS) Air and Water Database (AWDB) REST API provides access to snow, water, and climate monitoring data from SNOTEL (SNOw TELemetry) stations, Soil Climate Analysis Network (SCAN) stations, and other monitoring sites. Supports retrieval of station metadata, current conditions, and historical data for water resource management and forecasting.
   version: 1.0.0
   contact:
-    name: USDA Economic Research Service
-    url: https://www.ers.usda.gov/developer/
+    name: USDA NRCS National Water and Climate Center
+    url: https://www.nrcs.usda.gov/programs-initiatives/sswsf-snow-survey-and-water-supply-forecasting-program
   license:
     name: Public Domain
     url: https://www.usa.gov/government-works
 servers:
-- url: https://api.ers.usda.gov/data/arms
-  description: USDA ERS ARMS Data API
+- url: https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1
+  description: USDA NRCS AWDB REST API
 tags:
 - name: Forecasts
   description: Water supply forecasts
@@ -85,8 +85,3 @@ components:
               volumeKAF:
                 type: number
                 description: Forecast volume in thousand acre-feet
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: query
-      name: api_key

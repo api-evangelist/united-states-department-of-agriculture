@@ -1,17 +1,16 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: USDA ERS ARMS Data Metadata API
-  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  title: United States Department Of Agriculture Metadata API
   version: 1.0.0
-  contact:
-    name: USDA Economic Research Service
-    url: https://www.ers.usda.gov/developer/
   license:
     name: Public Domain
     url: https://www.usa.gov/government-works
+  description: 'Operations tagged Metadata across 2 of this provider''s published API definitions: usda-ers-arms-openapi.yml, usda-nass-quickstats-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.ers.usda.gov/data/arms
   description: USDA ERS ARMS Data API
+- url: https://quickstats.nass.usda.gov/api
+  description: USDA NASS Quick Stats API
 tags:
 - name: Metadata
   description: Available years, states, reports, and variables
@@ -47,6 +46,9 @@ paths:
                         year:
                           type: integer
                           description: Survey year
+    servers:
+    - url: https://api.ers.usda.gov/data/arms
+      description: USDA ERS ARMS Data API
   /state:
     get:
       operationId: getAvailableStates
@@ -79,6 +81,9 @@ paths:
                           type: string
                         stateName:
                           type: string
+    servers:
+    - url: https://api.ers.usda.gov/data/arms
+      description: USDA ERS ARMS Data API
   /report:
     get:
       operationId: getAvailableReports
@@ -113,6 +118,9 @@ paths:
                           type: string
                         description:
                           type: string
+    servers:
+    - url: https://api.ers.usda.gov/data/arms
+      description: USDA ERS ARMS Data API
   /variable:
     get:
       operationId: getAvailableVariables
@@ -155,6 +163,9 @@ paths:
                           type: string
                         units:
                           type: string
+    servers:
+    - url: https://api.ers.usda.gov/data/arms
+      description: USDA ERS ARMS Data API
   /get_param_values/:
     get:
       operationId: getParameterValues
@@ -198,9 +209,15 @@ paths:
                     type: array
                     items:
                       type: string
+    servers:
+    - url: https://quickstats.nass.usda.gov/api
+      description: USDA NASS Quick Stats API
 components:
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: query
       name: api_key
+x-refined-from:
+- usda-ers-arms-openapi.yml
+- usda-nass-quickstats-openapi.yml

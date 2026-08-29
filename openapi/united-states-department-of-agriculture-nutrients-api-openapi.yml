@@ -1,17 +1,18 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: USDA ERS ARMS Data Nutrients API
-  description: The USDA Economic Research Service (ERS) Agricultural Resource Management Survey (ARMS) Data API provides access to data on farm finances, production practices, and resource use for U.S. farms. Supports attribute-based querying of farm income, balance sheet, costs, and production data by year, state, and report type. An API key from api.data.gov is required.
+  title: USDA FoodData Central Nutrients API
+  description: The FoodData Central API provides REST access to FoodData Central (FDC), the USDA's integrated data system providing expanded nutrient profile data linked to agricultural and experimental research. Covers Foundation Foods, SR Legacy, FNDDS, Branded Foods, and Experimental Foods. An API key from api.data.gov is required.
   version: 1.0.0
   contact:
-    name: USDA Economic Research Service
-    url: https://www.ers.usda.gov/developer/
+    name: USDA FoodData Central
+    url: https://fdc.nal.usda.gov/
+    email: FSISWebmaster@usda.gov
   license:
     name: Public Domain
     url: https://www.usa.gov/government-works
 servers:
-- url: https://api.ers.usda.gov/data/arms
-  description: USDA ERS ARMS Data API
+- url: https://api.nal.usda.gov/fdc/v1
+  description: USDA FoodData Central API
 tags:
 - name: Nutrients
   description: Nutrient data and lists
@@ -66,3 +67,4 @@ components:
       type: apiKey
       in: query
       name: api_key
+      description: API key from https://api.data.gov/signup/
