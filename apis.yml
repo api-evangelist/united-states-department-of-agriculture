@@ -49,6 +49,8 @@ apis:
   humanURL: https://fdc.nal.usda.gov/api-guide/
   baseURL: https://api.nal.usda.gov/fdc/v1
   tags:
+  - Food
+  tags_raw:
   - Foods
   properties:
   - type: OpenAPI
