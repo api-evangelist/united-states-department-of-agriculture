@@ -25,7 +25,8 @@
     "usda-fooddata-central-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "usda-nass-quickstats-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "usda-nrcs-awdb-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "tag 'Metadata' spans 2 source specs (usda-ers-arms-openapi.yml, usda-nass-quickstats-openapi.yml): per-path servers applied"
+    "tag 'Metadata' spans 2 source specs (usda-ers-arms-openapi.yml, usda-nass-quickstats-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "united-states-department-of-agriculture-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
