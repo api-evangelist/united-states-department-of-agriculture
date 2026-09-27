@@ -231,6 +231,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SearchResultFood'
+    FoodNutrient:
+      type: object
+      description: Nutrient value for a food item
+      properties:
+        nutrientId:
+          type: integer
+          description: Nutrient identifier
+        nutrientName:
+          type: string
+          description: Name of the nutrient
+        nutrientNumber:
+          type: string
+          description: USDA nutrient number
+        unitName:
+          type: string
+          description: Unit of measure (g, mg, kcal, etc.)
+        value:
+          type: number
+          description: Amount of nutrient per 100g of food
+        derivationCode:
+          type: string
+          description: Method used to derive the nutrient value
     SearchResultFood:
       type: object
       description: Food item from search results
@@ -292,28 +314,6 @@ components:
         labelNutrients:
           type: object
           description: Nutrition facts label data (branded foods)
-    FoodNutrient:
-      type: object
-      description: Nutrient value for a food item
-      properties:
-        nutrientId:
-          type: integer
-          description: Nutrient identifier
-        nutrientName:
-          type: string
-          description: Name of the nutrient
-        nutrientNumber:
-          type: string
-          description: USDA nutrient number
-        unitName:
-          type: string
-          description: Unit of measure (g, mg, kcal, etc.)
-        value:
-          type: number
-          description: Amount of nutrient per 100g of food
-        derivationCode:
-          type: string
-          description: Method used to derive the nutrient value
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
