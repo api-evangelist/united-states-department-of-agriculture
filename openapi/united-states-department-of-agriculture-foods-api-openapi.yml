@@ -209,6 +209,32 @@ paths:
                   $ref: '#/components/schemas/FoodItem'
 components:
   schemas:
+    SearchResultFood:
+      type: object
+      description: Food item from search results
+      properties:
+        fdcId:
+          type: integer
+          description: FoodData Central unique identifier
+        description:
+          type: string
+          description: Food item description
+        dataType:
+          type: string
+          description: Type of food data source
+        brandOwner:
+          type: string
+          description: Brand owner (for branded foods)
+        gtinUpc:
+          type: string
+          description: GTIN or UPC barcode
+        publishedDate:
+          type: string
+          format: date
+          description: Date food was published in FDC
+        score:
+          type: number
+          description: Search relevance score
     FoodNutrient:
       type: object
       description: Nutrient value for a food item
@@ -231,6 +257,28 @@ components:
         derivationCode:
           type: string
           description: Method used to derive the nutrient value
+    SearchResult:
+      type: object
+      description: Paginated food search results
+      properties:
+        totalHits:
+          type: integer
+          description: Total number of matching foods
+        currentPage:
+          type: integer
+          description: Current page number
+        totalPages:
+          type: integer
+          description: Total number of pages
+        pageList:
+          type: array
+          items:
+            type: integer
+          description: List of page numbers
+        foods:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultFood'
     FoodItem:
       type: object
       description: Detailed food item with nutrient data
@@ -266,54 +314,6 @@ components:
         labelNutrients:
           type: object
           description: Nutrition facts label data (branded foods)
-    SearchResultFood:
-      type: object
-      description: Food item from search results
-      properties:
-        fdcId:
-          type: integer
-          description: FoodData Central unique identifier
-        description:
-          type: string
-          description: Food item description
-        dataType:
-          type: string
-          description: Type of food data source
-        brandOwner:
-          type: string
-          description: Brand owner (for branded foods)
-        gtinUpc:
-          type: string
-          description: GTIN or UPC barcode
-        publishedDate:
-          type: string
-          format: date
-          description: Date food was published in FDC
-        score:
-          type: number
-          description: Search relevance score
-    SearchResult:
-      type: object
-      description: Paginated food search results
-      properties:
-        totalHits:
-          type: integer
-          description: Total number of matching foods
-        currentPage:
-          type: integer
-          description: Current page number
-        totalPages:
-          type: integer
-          description: Total number of pages
-        pageList:
-          type: array
-          items:
-            type: integer
-          description: List of page numbers
-        foods:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchResultFood'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
