@@ -179,6 +179,13 @@ paths:
                     description: Number of matching records
 components:
   schemas:
+    QuickStatsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatRecord'
     StatRecord:
       type: object
       description: An individual agricultural statistics record
@@ -300,13 +307,6 @@ components:
         CV (%):
           type: string
           description: Coefficient of variation
-    QuickStatsResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatRecord'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

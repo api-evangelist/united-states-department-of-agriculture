@@ -209,9 +209,9 @@ paths:
                   $ref: '#/components/schemas/FoodItem'
 components:
   schemas:
-    SearchResultFood:
+    FoodItem:
       type: object
-      description: Food item from search results
+      description: Detailed food item with nutrient data
       properties:
         fdcId:
           type: integer
@@ -222,19 +222,28 @@ components:
         dataType:
           type: string
           description: Type of food data source
-        brandOwner:
-          type: string
-          description: Brand owner (for branded foods)
-        gtinUpc:
-          type: string
-          description: GTIN or UPC barcode
-        publishedDate:
+        publicationDate:
           type: string
           format: date
-          description: Date food was published in FDC
-        score:
-          type: number
-          description: Search relevance score
+          description: Publication date
+        foodClass:
+          type: string
+          description: Food classification
+        foodNutrients:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoodNutrient'
+        foodAttributes:
+          type: array
+          items:
+            type: object
+        inputFoods:
+          type: array
+          items:
+            type: object
+        labelNutrients:
+          type: object
+          description: Nutrition facts label data (branded foods)
     FoodNutrient:
       type: object
       description: Nutrient value for a food item
@@ -279,9 +288,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SearchResultFood'
-    FoodItem:
+    SearchResultFood:
       type: object
-      description: Detailed food item with nutrient data
+      description: Food item from search results
       properties:
         fdcId:
           type: integer
@@ -292,28 +301,19 @@ components:
         dataType:
           type: string
           description: Type of food data source
-        publicationDate:
+        brandOwner:
+          type: string
+          description: Brand owner (for branded foods)
+        gtinUpc:
+          type: string
+          description: GTIN or UPC barcode
+        publishedDate:
           type: string
           format: date
-          description: Publication date
-        foodClass:
-          type: string
-          description: Food classification
-        foodNutrients:
-          type: array
-          items:
-            $ref: '#/components/schemas/FoodNutrient'
-        foodAttributes:
-          type: array
-          items:
-            type: object
-        inputFoods:
-          type: array
-          items:
-            type: object
-        labelNutrients:
-          type: object
-          description: Nutrition facts label data (branded foods)
+          description: Date food was published in FDC
+        score:
+          type: number
+          description: Search relevance score
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
